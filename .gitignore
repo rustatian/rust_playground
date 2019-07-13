@@ -17,3 +17,4 @@ Cargo.lock
 /target
 #**/*.rs.b
 .idea/*
+guessing_game/target/**
