@@ -18,3 +18,4 @@ Cargo.lock
 #**/*.rs.b
 .idea/*
 guessing_game/target/**
+variables/target/**

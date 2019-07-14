@@ -1,9 +1,13 @@
-use std::ops::BitOr;
+extern crate iron;
+
+use iron::prelude::*;
+use iron::status;
 
 fn main() {
-    let x: i32 = 5;
-    println!("The value of x is: {}", x);
+    fn hello_world(_: &mut Request) -> IronResult<Response> {
+        Ok(Response::with((status::Ok, "Hello World!")))
+    }
 
-    const MAX_POINTS: u32 = 100_000;
-    dbg!(MAX_POINTS);
+    let _server = Iron::new(hello_world).http("localhost:3000").unwrap();
+    println!("On 3000");
 }
