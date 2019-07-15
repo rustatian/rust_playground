@@ -19,3 +19,4 @@ Cargo.lock
 .idea/*
 guessing_game/target/**
 variables/target/**
+variables/.idea
