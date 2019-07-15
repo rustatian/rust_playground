@@ -8,6 +8,13 @@ fn main() {
         Ok(Response::with((status::Ok, "Hello World!")))
     }
 
+
+    Iron::new(hello_other).http("localhost").unwrap();
+
     let _server = Iron::new(hello_world).http("localhost:3000").unwrap();
     println!("On 3000");
+}
+
+fn hello_other(r: &mut Request) -> IronResult<Response> {
+    Ok(Response::with((status::Ok, "Hello")))
 }
