@@ -29,7 +29,7 @@ fn main() {
 
     let builder = Server::bind(&addr);
 
-    let user_db = Arc::ne(Mutex::new(Slab::new()));
+    let user_db = Arc::new(Mutex::new(Slab::new()));
 
     let server = builder.serve(move || {
         let user_db = user_db.clone();
