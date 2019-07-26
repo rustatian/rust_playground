@@ -21,14 +21,12 @@ pub fn increase_score(mut val: u32, how_much: u32) {
 }
 
 pub fn doubler() {
-    let dbl  = |x| {
-        x * 2
+    let doubler = move |y| {
+        y * 2
     };
-
-    let doubler = |y| y * 2;
     let value = 5;
 
-    let twice = dbl(value);
+    let twice = doubler(value);
     println!("{} doubled is {}", value, twice);
 
     let big_closure = |b, c| {
