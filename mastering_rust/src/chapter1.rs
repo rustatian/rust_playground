@@ -20,6 +20,7 @@ pub fn increase_score(mut val: u32, how_much: u32) {
     println!("You made {} points", val);
 }
 
+#[allow(dead_code)]
 pub fn doubler() {
     let doubler = move |y| {
         y * 2
