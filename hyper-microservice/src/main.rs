@@ -1,9 +1,12 @@
-use hyper::{Server, Response, Body, Request, Error, Method, StatusCode};
-use hyper::service::{service_fn};
+use hyper::*;
+use hyper::service::service_fn;
 use futures::{Future, future};
-use std::sync::{Arc, Mutex};
+use std::sync::*;
 use slab::Slab;
-use std::net::SocketAddr;
+use std::net::*;
+use core::fmt;
+use regex::*;
+use lazy_static::*;
 
 // r# is a multiline string in rust, ending with #
 const INDEX: &'static str = r#"
@@ -18,13 +21,23 @@ const INDEX: &'static str = r#"
  </html>
 "#;
 
-const USER_PATH: &str = "/user/";
+lazy_static! {
+    static ref INDEX_PATH: Regex::new("^/(index\\.html?)?$").unwrap();
+    static ref USER_PATH: Regex::new("^/user/((?P<user_id>\\d+?)/?)?").unwrap();
+    static ref USERS_PATH: Regex::new("^/users/?$").unwrap();
+}
 
 
 type UserId = u64;
 
 
 struct UserData;
+
+impl fmt::Display for UserData {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str("{}")
+    }
+}
 
 type UserDb = Arc<Mutex<Slab<UserData>>>;
 
@@ -48,34 +61,66 @@ fn main() {
 
 
 fn microservice_handler(req: Request<Body>, user_db: &UserDb) -> impl Future<Item=Response<Body>, Error=Error> {
-    match (req.method(), req.uri().path()) {
-        (&Method::GET, "/") => {
-            future::ok(Response::new(INDEX.into()))
-        }
-        _ => {
-            let response = {
-                match (req.method(), req.uri().path()) {
-                    (&Method::GET, "/") => {
-                        Response::new(INDEX.into())
+    let response: Response<Body> = {
+        let method = req.method();
+        let path = req.uri().path();
+        let mut users = user_db.lock().unwrap();
+
+
+
+        match (req.method(), req.uri().path()) {
+            (&Method::GET, "/") => {
+                Response::new(INDEX.into())
+            }
+            (method, path) if path.starts_with(USER_PATH) => {
+                let user_id = path.trim_start_matches(USER_PATH)
+                    .parse::<UserId>()
+                    .ok()
+                    .map(|x| x as usize);
+                let mut users: MutexGuard<Slab<UserData>> = user_db.lock().unwrap();
+                match (method, user_id) {
+                    (&Method::GET, Some(id)) => {
+                        if let Some(data) = users.get(id) {
+                            Response::new(data.to_string().into())
+                        } else {
+                            response_with_code(StatusCode::NOT_FOUND)
+                        }
                     }
-                    (method, path) if path.starts_with(USER_PATH) => {
-                        let user_id = path.trim_start_matches(USER_PATH)
-                            .parse::<UserId>()
-                            .ok()
-                            .map(|x| x as usize);
-                        unimplemented!();
+                    (&Method::POST, None) => {
+                        let id = users.insert(UserData);
+                        Response::new(id.to_string().into())
                     }
+                    (&Method::POST, Some(_)) => {
+                        response_with_code(StatusCode::BAD_REQUEST)
+                    }
+                    (&Method::PUT, Some(id)) => {
+                        if let Some(user) = users.get_mut(id) {
+                            *user = UserData;
+                            response_with_code(StatusCode::OK)
+                        } else {
+                            response_with_code(StatusCode::NOT_FOUND)
+                        }
+                    }
+                    (&Method::DELETE, Some(id)) => {
+                        if users.contains(id) {
+                            users.remove(id);
+                            response_with_code(StatusCode::OK)
+                        } else {
+                            response_with_code(StatusCode::NOT_FOUND)
+                        }
+                    }
+
                     _ => {
-                        response_with_code(StatusCode::NOT_FOUND)
+                        response_with_code(StatusCode::METHOD_NOT_ALLOWED)
                     }
                 }
-            };
-//            let response = Response::builder().status(StatusCode::NOT_FOUND)
-//                .body(Body::empty())
-//                .unwrap();
-            future::ok(response)
+            }
+            _ => {
+                response_with_code(StatusCode::NOT_FOUND)
+            }
         }
-    }
+    };
+    future::ok(response)
 }
 
 
@@ -85,11 +130,6 @@ fn response_with_code(status_code: StatusCode) -> Response<Body> {
         .body(Body::empty())
         .unwrap()
 }
-
-//        service_fn_ok(|_| {
-//            Response::new(Body::from("Almost microservice..."))
-//        })
-//        // Expects the result to be converted into future with the IntoFuture trait
 
 
 
