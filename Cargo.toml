@@ -17,5 +17,6 @@ members = [
     "guessing_game",
     "variables",
     "mastering_rust",
-    "hyper-microservice"
+    "hyper-microservice",
+    "pingpcap/network/project-1"
 ]
