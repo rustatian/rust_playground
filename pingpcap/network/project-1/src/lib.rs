@@ -1,6 +1,23 @@
-#![deny(missing_docs)]
-//! A simple key/value store.
+pub struct KvStore {
 
-pub use kv::KvStore;
+}
 
-mod kv;
+impl KvStore {
+    pub fn new() -> KvStore {
+        KvStore{
+
+        }
+    }
+
+    pub fn get(&mut self, key: String) -> Option<String> {
+        None
+    }
+
+    pub fn set(&mut self, key: String, value: String) {
+
+    }
+
+    pub fn remove(&mut self, key: String) {
+
+    }
+}

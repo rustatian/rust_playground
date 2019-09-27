@@ -29,6 +29,10 @@ fn main() {
                 .about("Remove a given key")
                 .arg(Arg::with_name("KEY").help("A string key").required(true)),
         )
+//        .subcommand(
+//            SubCommand::with_name("V")
+//                .about("Current version")
+//        )
         .get_matches();
 
     match matches.subcommand() {
@@ -44,6 +48,10 @@ fn main() {
             eprintln!("unimplemented");
             exit(1);
         }
+//        ("V", Some(_matches)) => {
+//            eprintln!("unimplemented");
+//            exit(1);
+//        }
         _ => unreachable!(),
     }
 }
