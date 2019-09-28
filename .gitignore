@@ -16,11 +16,8 @@ Cargo.lock
 
 /target
 #**/*.rs.b
-.idea/*
-guessing_game/target/**
-variables/target/**
 variables/.idea
-
+**/**/target
 
 #Added by cargo
 #

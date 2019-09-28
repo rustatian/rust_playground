@@ -1,5 +1,5 @@
 [package]
-name = "rust_playground"
+name = "rust_vs_go_http"
 version = "0.1.0"
 authors = ["Valery Piashchynski <piashchynski_valery@hotmail.com>"]
 edition = "2018"
@@ -7,16 +7,4 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
-[[bin]]
-name = "rust_playground"
-path = "main.rs"
-
-[workspace]
-members = [
-    "guessing_game",
-    "variables",
-    "mastering_rust",
-    "hyper-microservice",
-    "pingpcap/network/project-1"
-]
+hyper = "0.13.0-alpha.2"
