@@ -1,5 +1,5 @@
 [package]
-name = "rust_vs_go_http"
+name = "http_thread_pool"
 version = "0.1.0"
 authors = ["Valery Piashchynski <piashchynski_valery@hotmail.com>"]
 edition = "2018"
@@ -7,4 +7,3 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-hyper = "0.13.0-alpha.2"
