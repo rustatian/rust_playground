@@ -64,6 +64,7 @@ trait FnBox {
 
 impl <F: FnOnce()> FnBox for F {
     fn call_box(self: Box<Self>) {
+
         (*self)()
     }
 }
