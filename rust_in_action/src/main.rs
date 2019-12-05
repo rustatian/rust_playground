@@ -16,6 +16,8 @@ use rocket::logger::LoggingLevel;
 use rocket::routes;
 use rocket::{get, Config};
 use rocket_contrib::json::Json;
+use std::rc::Rc;
+use std::sync::{Arc, Mutex};
 
 #[derive(Serialize)]
 struct Timestamp {
@@ -37,15 +39,20 @@ fn time_now() -> Json<Timestamp> {
 }
 
 fn main() {
-    let config = rocket::Config::build(Environment::Staging)
-        .address("0.0.0.0")
-        .log_level(LoggingLevel::Off)
-        .port(8000)
-        .workers(12)
-        .finalize()
-        .unwrap();
+    //    let config = rocket::Config::build(Environment::Staging)
+    //        .address("0.0.0.0")
+    //        .log_level(LoggingLevel::Off)
+    //        .port(8000)
+    //        .workers(12)
+    //        .finalize()
+    //        .unwrap();
+    //
+    //    rocket::custom(config)
+    //        .mount("/", routes![index, time_now])
+    //        .launch();
 
-    rocket::custom(config)
-        .mount("/", routes![index, time_now])
-        .launch();
+    let a = 10;
+    let b = Box::new(20);
+    let c = Rc::new(Box::new(30));
+    let d = Arc::new(Mutex::new(40));
 }
