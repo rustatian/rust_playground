@@ -1,12 +1,13 @@
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 
+mod arrays;
 mod generics;
 mod grep_lite_v1;
 mod lang_foundations;
 
 fn main() {
-    grep_lite_v1::grep_lite_v3();
+    grep_lite_v1::grep_lite_v4_vector();
 }
 
 fn types_declaring() {
