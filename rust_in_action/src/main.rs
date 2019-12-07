@@ -1,10 +1,12 @@
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 
+mod generics;
+mod grep_lite_v1;
 mod lang_foundations;
 
 fn main() {
-    lang_foundations::search_match();
+    grep_lite_v1::grep_lite_v3();
 }
 
 fn types_declaring() {
@@ -12,8 +14,6 @@ fn types_declaring() {
     let b = Box::new(20);
     let c = Rc::new(Box::new(30));
     let d = Arc::new(Mutex::new(40));
-
-    let res = add_with_lifetimes(&10, &20);
 }
 
 pub fn add_with_lifetimes<'a, 'b>(i: &'a i32, j: &'b i32) -> i32 {
