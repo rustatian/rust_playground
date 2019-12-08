@@ -1,3 +1,5 @@
+use regex::Regex;
+
 pub fn grep_lite_v1() {
     let search_pattern = "picture";
     let quote = "Every face, every shop, bedroom window, public-house, and
@@ -85,4 +87,21 @@ through millions of pages?";
             println!("{}: {}", line_num, line);
         }
     }
+}
+
+
+pub fn using_regexp() {
+    let re = Regex::new("picture").unwrap();
+    let quote = "Every face, every shop, bedroom window, public-house, and
+dark square is a picture feverishly turned--in search of what?
+It is the same with books. What do we seek through millions of pages?";
+
+    for line in quote.lines() {
+        match re.find(line) {
+            Some(_) => println!("{}", line),
+            None => (),
+        }
+    }
+
+
 }

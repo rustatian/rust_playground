@@ -7,7 +7,7 @@ mod grep_lite_v1;
 mod lang_foundations;
 
 fn main() {
-    grep_lite_v1::grep_lite_v4_vector();
+    grep_lite_v1::using_regexp();
 }
 
 fn types_declaring() {
