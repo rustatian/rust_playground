@@ -10,18 +10,14 @@ mod tokio;
 
 #[allow(dead_code)]
 fn main() {
-//    let my_closure = || ();
-//    let score: u32 = 2048;
-//    increase_score(score, 30);
-//
-//    stringsss();
-//    threading_fn();
-//
-//    let ss = String::from("wha tever");
-//
-//
-//    println!("{}", sanitize(ss))
-    tokio_start();
+    let mut v = vec![1, 2, 3];
+    let u: Vec<_> = v.drain(..1).collect();
+    assert_eq!(v, &[1]);
+    assert_eq!(u, &[2, 3]);
+
+    // A full range clears the vector
+    v.drain(..);
+    assert_eq!(v, &[]);
 }
 
 
