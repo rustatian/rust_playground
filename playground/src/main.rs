@@ -4,6 +4,8 @@ use svg::Document;
 use svg::node::element::{Path, Rectangle};
 use svg::node::element::path::{Command, Position, Data};
 
+use rayon::prelude::*;
+
 use crate::Operation::{Forward, TurnLeft, TurnRight, Home, Noop};
 use crate::Orientation::{North, East, West, South};
 
@@ -94,9 +96,8 @@ impl Artist {
 }
 
 fn parse(input: &str) -> Vec<Operation> {
-    let mut steps = Vec::<Operation>::new();
-    for byte in input.bytes() {
-        let step = match byte {
+    input.bytes().par_iter().map(|byte| {
+        match byte {
             b'0' => Home,
             b'1'..=b'9' => {
                 let distance = (byte - 0x30) as isize;
@@ -105,13 +106,11 @@ fn parse(input: &str) -> Vec<Operation> {
             b'a' | b'b' | b'c' => TurnLeft,
             b'd' | b'e' | b'f' => TurnRight,
             _ => Noop(byte),
-        };
-        steps.push(step);
-    }
-    steps
+        }
+    }).collect() // Vec <T> --> Vec<Operation>
 }
 
-fn convert(operations: &Vec<Operation>) -> Vec<Command> {
+fn convert(operations: &[Operation]) -> Vec<Command> {
     let mut turtle = Artist::new();
 
     let mut path_data = Vec::<Command>::with_capacity(1+operations.len());
