@@ -11,13 +11,16 @@ use crate::Orientation::{North, East, West, South};
 
 const WIDTH: isize = 400;
 const HEIGHT: isize = WIDTH;
-const HOME_Y: isize = HEIGHT/2;
-const HOME_X: isize = WIDTH/2;
+const HOME_Y: isize = HEIGHT / 2;
+const HOME_X: isize = WIDTH / 2;
 const STROKE_WIDTH: usize = 5;
 
 #[derive(Debug, Clone, Copy)]
 enum Orientation {
-    North, East, West, South,
+    North,
+    East,
+    West,
+    South,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -53,8 +56,8 @@ impl Artist {
         match self.heading {
             North => self.y += distance,
             South => self.y -= distance,
-            West  => self.x += distance,
-            East  => self.x -= distance,
+            West => self.x += distance,
+            East => self.x -= distance,
         }
     }
 
@@ -62,8 +65,8 @@ impl Artist {
         self.heading = match self.heading {
             North => East,
             South => West,
-            West  => North,
-            East  => South,
+            West => North,
+            East => South,
         }
     }
 
@@ -71,8 +74,8 @@ impl Artist {
         self.heading = match self.heading {
             North => West,
             South => East,
-            West  => South,
-            East  => North,
+            West => South,
+            East => North,
         }
     }
 
@@ -101,28 +104,29 @@ fn parse(input: &str) -> Vec<Operation> {
             b'0' => Home,
             b'1'..=b'9' => {
                 let distance = (byte - 0x30) as isize;
-                Forward(distance * (HEIGHT/10))
-            },
+                Forward(distance * (HEIGHT / 10))
+            }
             b'a' | b'b' | b'c' => TurnLeft,
             b'd' | b'e' | b'f' => TurnRight,
             _ => Noop(byte),
         }
-    }).collect() // Vec <T> --> Vec<Operation>
+    }).collect()
+    // Vec <T> --> Vec<Operation>
 }
 
 fn convert(operations: &[Operation]) -> Vec<Command> {
     let mut turtle = Artist::new();
 
-    let mut path_data = Vec::<Command>::with_capacity(1+operations.len());
+    let mut path_data = Vec::<Command>::with_capacity(1 + operations.len());
     path_data.push(Command::Move(Position::Absolute, (HOME_X, HOME_Y).into()));
 
     for op in operations {
         match *op {
             Forward(distance) => turtle.forward(distance),
-            TurnLeft          => turtle.turn_left(),
-            TurnRight         => turtle.turn_right(),
-            Noop(byte)        => eprintln!("warning: illegal byte encountered: {:?}", byte),
-            Home              => turtle.home(),
+            TurnLeft => turtle.turn_left(),
+            TurnRight => turtle.turn_right(),
+            Noop(byte) => eprintln!("warning: illegal byte encountered: {:?}", byte),
+            Home => turtle.home(),
         };
         path_data.push(Command::Line(Position::Absolute, (turtle.x, turtle.y).into()));
         turtle.wrap();
@@ -141,7 +145,7 @@ fn generate_svg(path_data: Vec<Command>) -> Document {
     let border = background.clone()
         .set("fill-opacity", "0.0")
         .set("stroke", "#cccccc")
-        .set("stroke-width", 3*STROKE_WIDTH);
+        .set("stroke-width", 3 * STROKE_WIDTH);
 
     let sketch = Path::new()
         .set("fill", "none")
@@ -154,7 +158,7 @@ fn generate_svg(path_data: Vec<Command>) -> Document {
         .set("viewBox", (0, 0, HEIGHT, WIDTH))
         .set("height", HEIGHT)
         .set("width", WIDTH)
-        .set("style", "style=\"outline: 5px solid #800000;\"" )
+        .set("style", "style=\"outline: 5px solid #800000;\"")
         .add(background)
         .add(sketch)
         .add(border);
