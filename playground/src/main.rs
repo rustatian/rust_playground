@@ -1,179 +1,64 @@
-use std::env;
+#[macro_use]
+extern crate crossbeam;
 
-use svg::Document;
-use svg::node::element::{Path, Rectangle};
-use svg::node::element::path::{Command, Position, Data};
+use std::thread;
+use crossbeam::channel::unbounded;
+use crate::ConnectivityCheck::{Pong, Ping, Pang};
 
-use rayon::prelude::*;
-
-use crate::Operation::{Forward, TurnLeft, TurnRight, Home, Noop};
-use crate::Orientation::{North, East, West, South};
-
-const WIDTH: isize = 400;
-const HEIGHT: isize = WIDTH;
-const HOME_Y: isize = HEIGHT / 2;
-const HOME_X: isize = WIDTH / 2;
-const STROKE_WIDTH: usize = 5;
-
-#[derive(Debug, Clone, Copy)]
-enum Orientation {
-    North,
-    East,
-    West,
-    South,
-}
-
-#[derive(Debug, Clone, Copy)]
-enum Operation {
-    Forward(isize),
-    TurnLeft,
-    TurnRight,
-    Home,
-    Noop(u8),
-}
+mod svg_sample;
 
 #[derive(Debug)]
-struct Artist {
-    x: isize,
-    y: isize,
-    heading: Orientation,
-}
-
-impl Artist {
-    fn new() -> Artist {
-        Artist {
-            heading: North,
-            x: HOME_X,
-            y: HOME_Y,
-        }
-    }
-    fn home(&mut self) {
-        self.x = HOME_X;
-        self.y = HOME_Y;
-    }
-
-    fn forward(&mut self, distance: isize) {
-        match self.heading {
-            North => self.y += distance,
-            South => self.y -= distance,
-            West => self.x += distance,
-            East => self.x -= distance,
-        }
-    }
-
-    fn turn_right(&mut self) {
-        self.heading = match self.heading {
-            North => East,
-            South => West,
-            West => North,
-            East => South,
-        }
-    }
-
-    fn turn_left(&mut self) {
-        self.heading = match self.heading {
-            North => West,
-            South => East,
-            West => South,
-            East => North,
-        }
-    }
-
-    fn wrap(&mut self) {
-        if self.x < 0 {
-            self.x = HOME_X;
-            self.heading = West;
-        } else if self.x > WIDTH {
-            self.x = HOME_X;
-            self.heading = East;
-        }
-
-        if self.y < 0 {
-            self.y = HOME_Y;
-            self.heading = North;
-        } else if self.y > HEIGHT {
-            self.y = HOME_Y;
-            self.heading = South;
-        }
-    }
-}
-
-fn parse(input: &str) -> Vec<Operation> {
-    input.bytes().par_iter().map(|byte| {
-        match byte {
-            b'0' => Home,
-            b'1'..=b'9' => {
-                let distance = (byte - 0x30) as isize;
-                Forward(distance * (HEIGHT / 10))
-            }
-            b'a' | b'b' | b'c' => TurnLeft,
-            b'd' | b'e' | b'f' => TurnRight,
-            _ => Noop(byte),
-        }
-    }).collect()
-    // Vec <T> --> Vec<Operation>
-}
-
-fn convert(operations: &[Operation]) -> Vec<Command> {
-    let mut turtle = Artist::new();
-
-    let mut path_data = Vec::<Command>::with_capacity(1 + operations.len());
-    path_data.push(Command::Move(Position::Absolute, (HOME_X, HOME_Y).into()));
-
-    for op in operations {
-        match *op {
-            Forward(distance) => turtle.forward(distance),
-            TurnLeft => turtle.turn_left(),
-            TurnRight => turtle.turn_right(),
-            Noop(byte) => eprintln!("warning: illegal byte encountered: {:?}", byte),
-            Home => turtle.home(),
-        };
-        path_data.push(Command::Line(Position::Absolute, (turtle.x, turtle.y).into()));
-        turtle.wrap();
-    }
-    path_data
-}
-
-fn generate_svg(path_data: Vec<Command>) -> Document {
-    let background = Rectangle::new()
-        .set("x", 0)
-        .set("y", 0)
-        .set("width", WIDTH)
-        .set("height", HEIGHT)
-        .set("fill", "#ffffff");
-
-    let border = background.clone()
-        .set("fill-opacity", "0.0")
-        .set("stroke", "#cccccc")
-        .set("stroke-width", 3 * STROKE_WIDTH);
-
-    let sketch = Path::new()
-        .set("fill", "none")
-        .set("stroke", "#2f2f2f")
-        .set("stroke-width", STROKE_WIDTH)
-        .set("stroke-opacity", "0.9")
-        .set("d", Data::from(path_data));
-
-    let document = Document::new()
-        .set("viewBox", (0, 0, HEIGHT, WIDTH))
-        .set("height", HEIGHT)
-        .set("width", WIDTH)
-        .set("style", "style=\"outline: 5px solid #800000;\"")
-        .add(background)
-        .add(sketch)
-        .add(border);
-
-    document
+enum ConnectivityCheck {
+    Ping,
+    Pong,
+    Pang,
 }
 
 fn main() {
-    let args = env::args().collect::<Vec<String>>();
-    let input = args.get(1).unwrap();
-    let default_filename = format!("{}.svg", input);
-    let save_to = args.get(2).unwrap_or(&default_filename);
+    two_way_communication();
+}
 
-    let operations = parse(input);
-    let path_data = convert(&operations);
-    let document = generate_svg(path_data);
-    svg::save(save_to, &document).unwrap();
+fn two_way_communication() {
+    let n_messages = 3;
+    let (requests_tx, requests_rx) = unbounded();
+    let (responses_tx, responses_rx) = unbounded();
+
+    thread::spawn(move || loop {
+        match requests_rx.recv().unwrap() {
+            Pong => {
+                eprintln!("unexpected pong response")
+            },
+            Ping => {
+                responses_tx.send(Pong).unwrap();
+            },
+            Pang => {
+                return;
+            },
+        }
+    });
+
+    for _ in 0..n_messages {
+        requests_tx.send(Ping).unwrap();
+    }
+
+    requests_tx.send(Pang).unwrap();
+
+    for _ in 0..n_messages {
+        select! {
+            recv(responses_rx) -> msg => println!("{:?}", msg),
+        }
+    }
+}
+
+fn _receive_sample() {
+    let (tx, rx) = unbounded();
+    println!("{}", 3);
+
+    thread::spawn(move || {
+        tx.send(42);
+    });
+
+    select! {
+        recv(rx) -> msg => println!("{:?}", msg),
+    }
 }
