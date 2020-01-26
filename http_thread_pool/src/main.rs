@@ -1,6 +1,6 @@
-use std::net::{TcpListener, TcpStream};
-use std::io::{Read, Write};
 use http_thread_pool::ThreadPool;
+use std::io::{Read, Write};
+use std::net::{TcpListener, TcpStream};
 
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:7878").unwrap();

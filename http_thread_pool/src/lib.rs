@@ -1,6 +1,6 @@
-use std::thread::JoinHandle;
+use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
-use std::sync::{mpsc, Mutex, Arc};
+use std::thread::JoinHandle;
 
 pub struct ThreadPool {
     threads: Vec<Worker>,
@@ -26,9 +26,12 @@ impl ThreadPool {
         }
     }
 
-//    pub fn spawn<F, T>(f: T) -> JoinHandle<T> where F: FnOnce() -> T + Send + 'static, T: Send + 'static
+    //    pub fn spawn<F, T>(f: T) -> JoinHandle<T> where F: FnOnce() -> T + Send + 'static, T: Send + 'static
 
-    pub fn execute<F>(&self, f: F) where F: FnOnce() + Send + 'static {
+    pub fn execute<F>(&self, f: F)
+    where
+        F: FnOnce() + Send + 'static,
+    {
         let job = Box::new(f);
         self.sender.send(job).unwrap();
     }
@@ -44,15 +47,12 @@ impl Worker {
         let thread = thread::spawn(move || {
             loop {
                 let job = receiver.lock().unwrap().recv().unwrap();
-//                println!("Worker {} got a job; executing.", id);
+                //                println!("Worker {} got a job; executing.", id);
                 job.call_box();
             }
         });
 
-        Worker {
-            id,
-            thread,
-        }
+        Worker { id, thread }
     }
 }
 
@@ -62,24 +62,8 @@ trait FnBox {
     fn call_box(self: Box<Self>);
 }
 
-impl <F: FnOnce()> FnBox for F {
+impl<F: FnOnce()> FnBox for F {
     fn call_box(self: Box<Self>) {
-
         (*self)()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
