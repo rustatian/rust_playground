@@ -12,13 +12,13 @@ fn main()  {
 }
 
 #[inline(always)]
-fn some_func() {
+fn some_func() -> std::io::Result<()> {
     let sys = System::new("http-server");
     HttpServer::new(|| {
         App::new()
             .route("/", web::get())
             .route("/{name}", web::get().to(greet))
-    }).bind("127.0.0.1:8000").unwrap()
+    }).bind("127.0.0.1:8000")?
         .workers(4).run();
-    sys.run();
+    sys.run()
 }
