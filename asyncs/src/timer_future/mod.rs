@@ -1,75 +1,61 @@
-use futures::task::Poll;
-
-pub struct TimerFuture {}
-
-//pub struct SocketRead<'a> {
-//    socket: &'a Socket,
-//}
-
-trait SimpleFuture {
-    type Output;
-    fn poll(&mut self, wake: fn()) -> Poll<Self::Output>;
+use {
+    std::{
+        future::Future,
+        pin::Pin,
+        sync::{Arc, Mutex},
+        task::{Context, Poll, Waker},
+        thread,
+        time::Duration,
+    },
+};
+pub struct TimerFuture {
+    shared_state: Arc<Mutex<SharedState>>,
 }
 
-//enum Poll<T> {
-//    Ready(T),
-//    Pending,
-//}
+struct SharedState {
+    /// Whether or not the sleep time has elapsed
+    completed: bool,
 
-pub struct Join<FutureA, FutureB> {
-    a: Option<FutureA>,
-    b: Option<FutureB>,
+    /// The waker for the task that `TimerFuture` is running on.
+    /// The thread can use this after setting `completed = true` to tell
+    /// `TimerFuture`'s task to wake up, see that `completed = true`, and
+    /// move forward.
+    waker: Option<Waker>,
 }
 
-impl<FutureA, FutureB> SimpleFuture for Join<FutureA, FutureB> where
-    FutureA: SimpleFuture<Output=()>,
-    FutureB: SimpleFuture<Output=()>, {
+impl Future for TimerFuture {
     type Output = ();
 
-    fn poll(&mut self, wake: fn()) -> Poll<Self::Output> {
-        if let Some(a) = &mut self.a {
-            if let Poll::Ready(()) = a.poll(wake) {
-                self.b.take();
-            }
-        }
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        let mut shared_state = self.shared_state.lock().unwrap();
 
-        if let Some(b) = &mut self.b {
-            if let Poll::Ready(()) = b.poll(wake) {
-                self.b.take();
-            }
-        }
-
-        if self.a.is_none() && self.b.is_none() {
+        if shared_state.completed {
             Poll::Ready(())
         } else {
+            shared_state.waker = Some(cx.waker().clone());
             Poll::Pending
         }
     }
 }
 
-pub struct AndThenFun<FutureA, FutureB> {
-    first: Option<FutureA>,
-    second: FutureB,
-}
+impl TimerFuture {
+    pub fn new(duration: Duration) -> Self {
+        let shared_state = Arc::new(Mutex::new(SharedState {
+            completed: false,
+            waker: None,
+        }));
 
-impl<FutureA, FutureB> SimpleFuture for AndThenFun<FutureA, FutureB> where
-    FutureA: SimpleFuture<Output=()>,
-    FutureB: SimpleFuture<Output=()>,
-{
-    type Output = ();
+        let thread_shared_state = shared_state.clone();
 
-    fn poll(&mut self, wake: fn()) -> Poll<Self::Output> {
-        if let Some(first) = &mut self.first {
-            match first.poll(wake) {
-                Poll::Ready(()) => {
-                    self.first.take();
-                }
-                Poll::Pending => {
-                    return Poll::Pending;
-                }
+        thread::spawn(move || {
+            thread::sleep(duration);
+            let mut shared_state = thread_shared_state.lock().unwrap();
+            shared_state.completed = true;
+            if let Some(waker) = shared_state.waker.take() {
+                waker.wake()
             }
-        }
+        });
 
-        self.second.poll(wake)
+        TimerFuture { shared_state }
     }
 }
