@@ -92,40 +92,24 @@ impl Executor {
 }
 
 
-//fn main() {
-//    let (executor, spawner) = new_executor_and_spawner();
-//
-//    // Spawn a task to print before and after waiting on a timer.
-//    spawner.spawn(async {
-//        println!("howdy!");
-//        // Wait for our timer future to complete after two seconds.
-//        TimerFuture::new(Duration::new(2, 0)).await;
-//        println!("done!");
-//    });
-//
-//    // Drop the spawner so that our executor knows it is finished and won't
-//    // receive more incoming tasks to run.
-//    drop(spawner);
-//
-//    // Run the executor until the task queue is empty.
-//    // This will print "howdy!", pause, and then print "done!".
-//    executor.run();
-//}
-
 fn main() {
-    // Set the address to run our socket on.
-    let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));
+    let (executor, spawner) = new_executor_and_spawner();
 
-    // Call our `run_server` function, which returns a future.
-    // As with every `async fn`, for `run_server` to do anything,
-    // the returned future needs to be run. Additionally,
-    // we need to convert the returned future from a futures 0.3 future into a
-    // futures 0.1 future.
-    let futures_03_future = http_server_simple::run_server(addr);
-    let futures_01_future = futures_03_future.unit_error().boxed().compat();
+    // Spawn a task to print before and after waiting on a timer.
+    spawner.spawn(async {
+        println!("howdy!");
+        // Wait for our timer future to complete after two seconds.
+        TimerFuture::new(Duration::new(2, 0)).await;
+        println!("done!");
+    });
 
-    // Finally, we can run the future to completion using the `run` function
-    // provided by Hyper.
-    http_server_simple::run(futures_01_future);
+    // Drop the spawner so that our executor knows it is finished and won't
+    // receive more incoming tasks to run.
+    drop(spawner);
+
+    // Run the executor until the task queue is empty.
+    // This will print "howdy!", pause, and then print "done!".
+    executor.run();
 }
+
 
