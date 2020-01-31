@@ -18,6 +18,7 @@ fn hello() -> ! {
 
 fn main() {
 
+
 }
 
 unsafe fn gt_switch(new: *const ThreadContext) {
