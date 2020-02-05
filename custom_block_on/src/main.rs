@@ -15,5 +15,6 @@ fn block_on<F: Future>(future: F) -> F::Output {
             Poll::Ready(output) => return output,
             Poll::Pending => thread::park(),
         }
+
     }
 }
