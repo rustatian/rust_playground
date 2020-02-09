@@ -18,6 +18,10 @@ struct Task {
     // Output is () because the `spawn()` function has wrapped the original
     // future into one that sends the output into the oneshot channel and then
     // simply returns with `()`
+    // The future is pinned to the HEAP, because only PINNED futures can be polled
+    // MUTEX: every waker associated with the task will hold a `Task` reference so that it can wake the task
+    // by pushing it into global task queue. `Task` instances are shared among threads, but polling
+    // the future requires mutable access to it. So, MUTEX is here to help :P
     future: Mutex<Pin<Box<dyn Future<Output=()> + Send>>>,
 }
 
