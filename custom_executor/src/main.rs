@@ -2,7 +2,11 @@ use futures::Future;
 use std::pin::Pin;
 use futures::channel::oneshot;
 use std::sync::atomic::AtomicUsize;
-use std::sync::Mutex;
+use std::sync::{Mutex, Arc};
+use once_cell::sync::Lazy;
+use crossbeam::channel;
+use std::thread;
+use futures::task::Context;
 
 fn main() {
     futures::executor::block_on(async {
@@ -25,6 +29,15 @@ struct Task {
     future: Mutex<Pin<Box<dyn Future<Output=()> + Send>>>,
 }
 
+impl Task {
+    fn run(self: Arc<Task>) {
+        let waker = todo!();
+
+        let context = &mut Context::from_waker(&waker);
+        self.future.try_lock().unwrap().as_mut().poll(context);
+    }
+}
+
 // temporary
 type JoinHandle<R> = Pin<Box<dyn Future<Output=R> + Send>>;
 
@@ -37,9 +50,29 @@ fn spawn<F, R>(future: F) -> JoinHandle<R> where
         let _ = s.send(future.await);
     };
 
-    todo!();
+    let task = Arc::new(Task {
+        state: AtomicUsize::new(0),
+        future: Mutex::new(Box::pin(future)),
+    });
+
+
+    QUEUE.send(task).unwrap();
 
     Box::pin(async {
         r.await.unwrap()
     })
 }
+
+
+static QUEUE: Lazy<channel::Sender<Arc<Task>>> = Lazy::new(|| {
+    let (sender, receiver) = channel::unbounded::<Arc<Task>>();
+
+    for _ in 0..num_cpus::get().max(1) {
+        let receiver = receiver.clone();
+        thread::spawn(move || {
+            receiver.iter().for_each(|task| task.run())
+        });
+    }
+
+    sender
+});
