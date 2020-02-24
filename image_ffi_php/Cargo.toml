@@ -1,5 +1,5 @@
 [package]
-name = "ImageMagick"
+name = "image_ffi_php"
 version = "0.1.0"
 authors = ["Valery Piashchynski <piashchynski_valery@hotmail.com>"]
 edition = "2018"
@@ -7,6 +7,3 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-libc = "0.2.67"
-bindgen = "0.53.1"
-pkg-config = "0.3.17"

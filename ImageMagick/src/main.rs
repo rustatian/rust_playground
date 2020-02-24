@@ -1,3 +1,0 @@
-mod bindings;
-
-fn main() {}
