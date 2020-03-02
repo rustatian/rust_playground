@@ -1,12 +1,13 @@
-use futures::Future;
-use std::pin::Pin;
-use futures::channel::oneshot;
-use std::sync::atomic::AtomicUsize;
-use std::sync::{Mutex, Arc};
-use once_cell::sync::Lazy;
+#![allow(dead_code)]
 use crossbeam::channel;
-use std::thread;
+use futures::channel::oneshot;
 use futures::task::Context;
+use futures::Future;
+use once_cell::sync::Lazy;
+use std::pin::Pin;
+use std::sync::atomic::AtomicUsize;
+use std::sync::{Arc, Mutex};
+use std::thread;
 
 fn main() {
     futures::executor::block_on(async {
@@ -26,7 +27,7 @@ struct Task {
     // MUTEX: every waker associated with the task will hold a `Task` reference so that it can wake the task
     // by pushing it into global task queue. `Task` instances are shared among threads, but polling
     // the future requires mutable access to it. So, MUTEX is here to help :P
-    future: Mutex<Pin<Box<dyn Future<Output=()> + Send>>>,
+    future: Mutex<Pin<Box<dyn Future<Output = ()> + Send>>>,
 }
 
 impl Task {
@@ -39,11 +40,12 @@ impl Task {
 }
 
 // temporary
-type JoinHandle<R> = Pin<Box<dyn Future<Output=R> + Send>>;
+type JoinHandle<R> = Pin<Box<dyn Future<Output = R> + Send>>;
 
-fn spawn<F, R>(future: F) -> JoinHandle<R> where
-    F: Future<Output=R> + Send + 'static,
-    R: Send + 'static
+fn spawn<F, R>(future: F) -> JoinHandle<R>
+where
+    F: Future<Output = R> + Send + 'static,
+    R: Send + 'static,
 {
     let (s, r) = oneshot::channel();
     let future = async move {
@@ -55,23 +57,17 @@ fn spawn<F, R>(future: F) -> JoinHandle<R> where
         future: Mutex::new(Box::pin(future)),
     });
 
-
     QUEUE.send(task).unwrap();
 
-    Box::pin(async {
-        r.await.unwrap()
-    })
+    Box::pin(async { r.await.unwrap() })
 }
-
 
 static QUEUE: Lazy<channel::Sender<Arc<Task>>> = Lazy::new(|| {
     let (sender, receiver) = channel::unbounded::<Arc<Task>>();
 
     for _ in 0..num_cpus::get().max(1) {
         let receiver = receiver.clone();
-        thread::spawn(move || {
-            receiver.iter().for_each(|task| task.run())
-        });
+        thread::spawn(move || receiver.iter().for_each(|task| task.run()));
     }
 
     sender
