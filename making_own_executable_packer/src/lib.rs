@@ -13,6 +13,7 @@ impl File {
             sequence::tuple,
         };
 
+        // 7f45 4c46 0201 0100 0000 0000 0000 0000
         let (i, _) = tuple((
             context("Magic", tag(Self::ELF_MAGIC)),
             context("Class", tag(&[0x2])),
