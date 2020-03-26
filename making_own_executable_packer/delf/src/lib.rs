@@ -1,6 +1,20 @@
-use std::convert::TryFrom;
-
 mod parse;
+
+// &'a [u8] is self.0
+pub struct HexDump<'a>(&'a [u8]);
+
+use std::fmt;
+use std::fmt::Formatter;
+
+impl<'a> fmt::Debug for HexDump<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        // take only first 20 numbers
+        for &x in self.0.iter().take(20) {
+            write!(f, "{:02x} ", x)?;
+        }
+        Ok(())
+    }
+}
 
 #[derive(Debug)]
 pub struct File {
@@ -30,9 +44,8 @@ impl File {
         ))(i)?;
 
         let (i, (r#type, machine)) = tuple((
-            context("Type", map(le_u16, |x| Type::from_u16(x))),
-            context("Machine", map(le_u16, |x| Machine::from_u16(x),
-            )),
+            context("Type", map(le_u16, Type::from_u16)),
+            context("Machine", map(le_u16, Machine::from_u16)),
         ))(i)?;
 
         let t = r#type;
@@ -40,6 +53,24 @@ impl File {
 
         let res = Self { machine: m.unwrap(), r#type: t.unwrap() };
         Ok((i, res))
+    }
+
+    #[allow(clippy::match_wild_err_arm)]
+    pub fn parse_or_print_error(i: parse::Input) -> Option<Self> {
+        match Self::parse(i) {
+            Ok((_, file)) => {
+                Some(file)
+            }
+            Err(nom::Err::Failure(err)) | Err(nom::Err::Error(err)) => {
+                eprintln!("Parsing failed: ");
+                for (input, err) in err.errors {
+                    eprintln!("{:?} at:", err);
+                    eprintln!(" {:?}", HexDump(input));
+                }
+                None
+            }
+            Err(_) => panic!("unexpected nom error"),
+        }
     }
 }
 
