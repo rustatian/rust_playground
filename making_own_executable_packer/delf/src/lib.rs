@@ -64,8 +64,10 @@ impl File {
             Err(nom::Err::Failure(err)) | Err(nom::Err::Error(err)) => {
                 eprintln!("Parsing failed: ");
                 for (input, err) in err.errors {
-                    eprintln!("{:?} at:", err);
-                    eprintln!(" {:?}", HexDump(input));
+                    use nom::Offset;
+                    let offset = i.offset(input);
+                    eprintln!("{:?} at position {}:", err, offset);
+                    eprintln!("{:>08x}: {:?}", offset, HexDump(input));
                 }
                 None
             }
@@ -107,6 +109,26 @@ pub enum Machine {
 }
 
 impl Machine {
+    pub fn parse(i: parse::Input) -> parse::Result<Self> {
+        let original_i = i;
+        use nom::{
+            error::{ErrorKind, ParseError, VerboseError},
+            number::complete::le_u16,
+            Err,
+        };
+
+        let (i, x) = le_u16(i)?;
+        match Self::from_u16(x) {
+            None => {
+                Err(Err::Failure(VerboseError::from_error_kind(
+                    original_i,
+                    ErrorKind::Alt,)))
+            },
+            Some(res) => {
+                Ok((i, res))
+            },
+        }
+    }
     pub fn from_u16(m: u16) -> Option<Self> {
         match m {
             0x03 => Some(Self::X86),
