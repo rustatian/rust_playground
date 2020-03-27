@@ -115,19 +115,29 @@ impl Machine {
             error::{ErrorKind, ParseError, VerboseError},
             number::complete::le_u16,
             Err,
+            combinator::map_res,
         };
 
-        let (i, x) = le_u16(i)?;
-        match Self::from_u16(x) {
-            None => {
-                Err(Err::Failure(VerboseError::from_error_kind(
-                    original_i,
-                    ErrorKind::Alt,)))
-            },
-            Some(res) => {
-                Ok((i, res))
-            },
-        }
+        // SOLUTION 1
+        // let (i, x) = le_u16(i)?;
+        // match Self::from_u16(x) {
+        //     None => {
+        //         Err(Err::Failure(VerboseError::from_error_kind(
+        //             original_i,
+        //             ErrorKind::Alt,)))
+        //     },
+        //     Some(res) => {
+        //         Ok((i, res))
+        //     },
+        // }
+
+        // SOLUTION 2
+        // Returns Result<O2, E2>, where O2 is output of our mapping func
+        // and E2 is the error
+        map_res(le_u16, |x| match Self::from_u16(x) {
+            Some(x) => Ok(x),
+            None => Err(ErrorKind::Alt),
+        })(i)
     }
     pub fn from_u16(m: u16) -> Option<Self> {
         match m {
