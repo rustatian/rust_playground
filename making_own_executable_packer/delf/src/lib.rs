@@ -108,37 +108,43 @@ pub enum Machine {
     X86_64 = 0x3e,
 }
 
+impl_parse_for_enum!(Type, le_u16);
+impl_parse_for_enum!(Machine, le_u16);
+
 impl Machine {
-    pub fn parse(i: parse::Input) -> parse::Result<Self> {
-        let original_i = i;
-        use nom::{
-            error::{ErrorKind, ParseError, VerboseError},
-            number::complete::le_u16,
-            Err,
-            combinator::map_res,
-        };
-
-        // SOLUTION 1
-        // let (i, x) = le_u16(i)?;
-        // match Self::from_u16(x) {
-        //     None => {
-        //         Err(Err::Failure(VerboseError::from_error_kind(
-        //             original_i,
-        //             ErrorKind::Alt,)))
-        //     },
-        //     Some(res) => {
-        //         Ok((i, res))
-        //     },
-        // }
-
-        // SOLUTION 2
-        // Returns Result<O2, E2>, where O2 is output of our mapping func
-        // and E2 is the error
-        map_res(le_u16, |x| match Self::from_u16(x) {
-            Some(x) => Ok(x),
-            None => Err(ErrorKind::Alt),
-        })(i)
-    }
+    // pub fn parse(i: parse::Input) -> parse::Result<Self> {
+    //     use nom::{
+    //         error::{context, ErrorKind},
+    //         number::complete::le_u16,
+    //         combinator::map_res,
+    //     };
+    //
+    //     // SOLUTION 1
+    //
+    //     // let (i, x) = le_u16(i)?;
+    //     // match Self::from_u16(x) {
+    //     //     None => {
+    //     //         Err(Err::Failure(VerboseError::from_error_kind(
+    //     //             original_i,
+    //     //             ErrorKind::Alt,)))
+    //     //     },
+    //     //     Some(res) => {
+    //     //         Ok((i, res))
+    //     //     },
+    //     // }
+    //
+    //     // SOLUTION 2 anti-pattern, option<t> convert to the Result<T,E>
+    //
+    //     // Returns Result<O2, E2>, where O2 is output of our mapping func
+    //     // and E2 is the error
+    //     // map_res(le_u16, |x| match Self::from_u16(x) {
+    //     //     Some(x) => Ok(x),
+    //     //     None => Err(ErrorKind::Alt),
+    //     // })(i)
+    //
+    //     // SOLUTION 3
+    //     context("Machine", map_res(le_u16, |x| Self::from_u16(x).ok_or(ErrorKind::Alt)))(i)
+    // }
     pub fn from_u16(m: u16) -> Option<Self> {
         match m {
             0x03 => Some(Self::X86),
