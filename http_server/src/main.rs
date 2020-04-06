@@ -1,33 +1,22 @@
-use std::{convert::Infallible, net::SocketAddr};
-use hyper::{Body, Request, Response, Server, Method, StatusCode};
-use hyper::service::{make_service_fn, service_fn};
+use actix_web::{middleware, dev::BodyEncoding, HttpResponse, Responder, HttpServer, App, web, http};
+use actix_cors::Cors;
 
-async fn handle(req: Request<Body>) -> Result<Response<Body>, Infallible> {
-    let mut response = Response::new(Body::empty());
 
-    match (req.method(), req.uri().path()) {
-        (&Method::GET, "/ready") => {
-            *response.status_mut() = StatusCode::OK;
-        }
-        _ => {
-            *response.status_mut() = StatusCode::NOT_FOUND;
-        }
-    };
-
-    Ok(response)
+async fn index() -> impl Responder {
+    format!("Hello world")
 }
 
-#[tokio::main]
-async fn main() {
-    let addr = SocketAddr::from(([127, 0, 0, 1], 34578));
-
-    let make_svc = make_service_fn(|_conn| async {
-        Ok::<_, Infallible>(service_fn(handle))
-    });
-
-    let server = Server::bind(&addr).serve(make_svc);
-
-    if let Err(e) = server.await {
-        eprintln!("server error: {}", e);
-    }
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| App::new().wrap(Cors::new()
+        .allowed_origin("*")
+        .allowed_methods(vec!["*"])
+        .allowed_headers(vec!["*"])
+        .allowed_header("*")
+        .max_age(3600)
+        .finish()).service(
+        web::resource("/ready").to(index)))
+        .bind("127.0.0.1:34578")?
+        .run()
+        .await
 }
