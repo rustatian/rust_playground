@@ -1,8 +1,5 @@
-#![allow(unused_variables)]
-#![allow(dead_code)]
-#![allow(unused_mut)]
-
 use clap::Clap;
+use std::process::exit;
 
 #[derive(Clap)]
 #[clap(version = "0.1.0", author = "Valery Piashchynski")]
@@ -39,13 +36,16 @@ fn main() {
 
     match opts.subcmd {
         SubCommand::Get(t) => {
-            panic!("unimplemented");
+            eprintln!("unimplemented");
+            exit(1);
         }
         SubCommand::Set(s) => {
-            panic!("unimplemented");
+            eprintln!("unimplemented");
+            exit(1);
         }
         SubCommand::Rm(r) => {
-            panic!("unimplemented");
+            eprintln!("unimplemented");
+            exit(1);
         }
     }
 }
