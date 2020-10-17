@@ -1,4 +1,6 @@
 use std::collections::HashMap;
+use std::path::PathBuf;
+use crate::errors;
 
 /// The `KvStore` stores string key/value pairs.
 ///
@@ -25,6 +27,17 @@ impl KvStore {
         }
     }
 
+    pub fn open(path: impl Into<PathBuf>) -> errors::Result<KvStore> {
+        Ok(KvStore {
+            values: HashMap::new(),
+        })
+    }
+
+    /// Remove a given key.
+    pub fn remove(&mut self, key: String) -> errors::Result<()> {
+        Ok(())
+    }
+
     /// Sets the value of a string key to a string.
     ///
     /// If the key already exists, the previous value will be overwritten.
@@ -38,8 +51,8 @@ impl KvStore {
     pub fn get(&self, key: String) -> Option<String> {
         self.values.get(&key).cloned()
     }
-    /// Remove a given key.
-    pub fn remove(&mut self, key: String) {
-        self.values.remove(&key);
-    }
+
+    // pub fn remove(&mut self, key: String) {
+    //     self.values.remove(&key);
+    // }
 }
