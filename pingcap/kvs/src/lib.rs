@@ -4,3 +4,4 @@ pub use kv::KvStore;
 
 mod kv;
 mod errors;
+mod command;
