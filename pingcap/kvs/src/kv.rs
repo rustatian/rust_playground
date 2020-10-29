@@ -19,6 +19,14 @@ pub struct KvStore {
     values: HashMap<String, String>,
 }
 
+impl Default for KvStore {
+    fn default() -> Self {
+        KvStore {
+            values: HashMap::new(),
+        }
+    }
+}
+
 impl KvStore {
     /// Creates a `KvStore`.
     pub fn new() -> Self {
