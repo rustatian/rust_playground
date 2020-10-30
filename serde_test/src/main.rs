@@ -40,8 +40,5 @@ fn main() -> Result<(), io::Error> {
         println!("{} - {}", b.id, b.some_field2);
     }
 
-    
-
-
     Ok(())
 }
