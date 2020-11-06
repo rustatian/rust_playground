@@ -15,14 +15,14 @@ files:
   visible: true
   placeholders:
   - offset: 81
-    length: 65
+    length: 9
     placeholder_text: /*Access the second element of the tuple here using tuple index*/
     initial_state:
       length: 65
       offset: 81
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: numbers.1
   text: |-
     fn main() {
@@ -65,5 +65,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 16:35:08 UTC
 record: -1
