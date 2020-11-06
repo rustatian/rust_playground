@@ -4,13 +4,13 @@ files:
   visible: true
   placeholders:
   - offset: 16
-    length: 33
+    length: 14
     placeholder_text: // put you code here to launch it
     initial_state:
       length: 33
       offset: 16
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: println!("Hello, world!");
   text: |
