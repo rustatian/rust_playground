@@ -1,3 +1,4 @@
 fn main() {
-    // put you code here to launch it
+
+    let guess: u32 = "42".parse().expect("not a number");
 }
