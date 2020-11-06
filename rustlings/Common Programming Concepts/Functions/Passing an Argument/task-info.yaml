@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 24
-    length: 4
+    length: 1
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 24
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 5
   text: |-
     fn main() {
@@ -47,5 +47,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 19:09:13 UTC
 record: -1
