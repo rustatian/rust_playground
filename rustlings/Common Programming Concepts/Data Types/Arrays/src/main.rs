@@ -1,5 +1,5 @@
 fn main() {
-    let a = type here;
+    let a = [0_u64; 100];
 
     if a.len() >= 100 {
         println!("Wow, that's a big array!");

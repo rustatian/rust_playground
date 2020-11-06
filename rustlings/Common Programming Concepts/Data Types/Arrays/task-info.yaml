@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 24
-    length: 9
+    length: 12
     placeholder_text: type here
     initial_state:
       length: 9
       offset: 24
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: '["All work and no play makes Jack a dull boy"; 100]'
   text: |
     fn main() {
@@ -47,5 +47,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 16:31:51 UTC
 record: -1
