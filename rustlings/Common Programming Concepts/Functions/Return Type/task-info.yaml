@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 140
-    length: 19
+    length: 3
     placeholder_text: /*put a type here*/
     initial_state:
       length: 19
       offset: 140
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: i32
   text: |-
     fn main() {
@@ -54,5 +54,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 19:09:27 UTC
 record: -1
