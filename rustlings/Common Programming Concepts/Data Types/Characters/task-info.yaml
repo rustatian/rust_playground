@@ -12,7 +12,7 @@ files:
   visible: true
   placeholders:
   - offset: 280
-    length: 207
+    length: 230
     placeholder_text: |-
       // Finish this line like the example! What's your favorite character?
           // Try a letter, try a number, try a special character, try a character
@@ -21,8 +21,8 @@ files:
       length: 207
       offset: 280
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: your_character = 'g';
   text: |
     fn main() {
@@ -62,5 +62,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 16:26:40 UTC
 record: -1
