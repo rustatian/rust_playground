@@ -11,15 +11,15 @@ files:
 - name: src/main.rs
   visible: true
   placeholders:
-  - offset: 21
-    length: 4
+  - offset: 20
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 21
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: ' = 10'
   text: |-
     fn main() {
@@ -42,5 +42,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 11:52:08 UTC
 record: -1
