@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 21
-    length: 31
+    length: 5
     placeholder_text: /*insert here missing part(s)*/
     initial_state:
       length: 31
       offset: 21
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: ': u32 = 8'
   text: |-
     fn main() {
@@ -46,5 +46,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 11:50:52 UTC
 record: -1
