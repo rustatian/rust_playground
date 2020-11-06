@@ -30,34 +30,34 @@ files:
   visible: true
   placeholders:
   - offset: 47
-    length: 10
+    length: 11
     placeholder_text: /* TODO */
     initial_state:
       length: 10
       offset: 47
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 'order_amount: i32'
-  - offset: 59
-    length: 8
+  - offset: 60
+    length: 7
     placeholder_text: /*TODO*/
     initial_state:
       length: 8
       offset: 59
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: -> i32
-  - offset: 74
-    length: 7
+  - offset: 73
+    length: 212
     placeholder_text: // TODO
     initial_state:
       length: 7
       offset: 74
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: |-
       match order_amount.cmp(&40) {
               Ordering::Less => order_amount*2,
@@ -71,5 +71,8 @@ files:
         // TODO
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 06 Nov 2020 19:16:00 UTC
 record: -1
