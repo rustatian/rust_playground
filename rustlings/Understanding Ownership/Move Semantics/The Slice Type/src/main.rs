@@ -1,5 +1,8 @@
 fn main() {
-    // put you code here to launch it
+    let mut s = String::from("hello world");
+    let word = first_word(&s);
+    s.clear();
+    // word here is invalid
 }
 
 fn first_word(s: &String) -> usize {
