@@ -22,7 +22,7 @@ files:
       offset: 0
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: |-
       /*This would be the wrong place to put the main function declaration, as the macro would be
       undefined at this moment*/
@@ -34,7 +34,7 @@ files:
       offset: 119
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: |-
       fn main() {
           my_macro!();
@@ -67,5 +67,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 19:27:04 UTC
 record: -1
