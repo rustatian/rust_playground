@@ -11,66 +11,66 @@ files:
 - name: src/main.rs
   visible: true
   placeholders:
-  - offset: 83
-    length: 48
+  - offset: 82
+    length: 78
     placeholder_text: /*you could replace vec0 with another variable*/
     initial_state:
       length: 48
       offset: 83
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: let vec_aux = vec0.clone();
-  - offset: 161
+  - offset: 190
     length: 25
     placeholder_text: vec_0 /*and put it here*/
     initial_state:
       length: 25
       offset: 161
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: vec_aux
-  - offset: 417
-    length: 58
+  - offset: 446
+    length: 4
     placeholder_text: /*if you gonna modify the argument, it should be mutable*/
     initial_state:
       length: 58
       offset: 417
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 'mut '
-  - offset: 490
-    length: 72
+  - offset: 464
+    length: 12
     placeholder_text: -> Vec<i32> /*if you are not returning a value, here should
       be no type*/
     initial_state:
       length: 72
       offset: 490
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: -> Vec<i32>
-  - offset: 569
-    length: 30
+  - offset: 486
+    length: 27
     placeholder_text: /*you could borrow vec value*/
     initial_state:
       length: 30
       offset: 569
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: //let mut vec =vec.borrow();
-  - offset: 660
-    length: 55
+  - offset: 583
+    length: 51
     placeholder_text: vec /*and then you don't have to return anything here*/
     initial_state:
       length: 55
       offset: 660
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: return vec
   text: |
     use std::borrow::{Borrow, BorrowMut};
@@ -115,5 +115,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 13:10:38 UTC
 record: -1
