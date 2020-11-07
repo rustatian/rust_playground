@@ -15,14 +15,14 @@ files:
   visible: true
   placeholders:
   - offset: 262
-    length: 49
+    length: 4
     placeholder_text: /*you could set the argument to be mutable here*/
     initial_state:
       length: 49
       offset: 262
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 'mut '
   text: |-
     fn main() {
@@ -72,5 +72,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 14:21:44 UTC
 record: -1
