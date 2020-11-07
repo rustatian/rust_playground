@@ -1,5 +1,5 @@
-mod sausage_factory {
-    /*insert the keyword here to make the function public*/fn make_sausage() {
+pub mod sausage_factory {
+    pub fn make_sausage() {
         println!("sausage!");
     }
 }

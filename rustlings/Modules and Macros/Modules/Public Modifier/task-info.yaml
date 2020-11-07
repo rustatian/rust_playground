@@ -14,15 +14,15 @@ files:
 - name: src/main.rs
   visible: true
   placeholders:
-  - offset: 26
-    length: 55
+  - offset: 30
+    length: 4
     placeholder_text: /*insert the keyword here to make the function public*/
     initial_state:
       length: 55
       offset: 26
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 'pub '
   text: |
     mod sausage_factory {
@@ -57,5 +57,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 16:27:05 UTC
 record: -1
