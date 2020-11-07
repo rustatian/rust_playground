@@ -7,7 +7,7 @@ fn main() {
     let s2 = String::from("hello world");
     let hello = &s2[0..5];
     let world = &s2[6..11];
-    println!("{}", word);
+    // println!("{}", word); error
 }
 
 fn first_word(s: &String) -> &str {
