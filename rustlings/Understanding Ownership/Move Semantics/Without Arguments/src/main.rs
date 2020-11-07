@@ -1,7 +1,6 @@
 fn main() {
-    let vec0 = Vec::new();
 
-    let mut vec1 = fill_vec(vec0);
+    let mut vec1 = fill_vec();
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 
@@ -12,9 +11,9 @@ fn main() {
 
 // `fill_vec()` no longer take `vec: Vec<i32>` as argument
 fn fill_vec() -> Vec<i32> {
-    //The vector declaration should be here
+    let mut vec = vec![];
 
-    let mut vec = vec /*assign the created variable here*/;
+    /*assign the created variable here*/
 
     vec.push(22);
     vec.push(44);
