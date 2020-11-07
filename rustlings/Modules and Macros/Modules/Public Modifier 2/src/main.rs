@@ -1,6 +1,6 @@
 mod delicious_snacks {
-    /*insert a modifier here to make the module accessible from outside*/ use self::fruits::PEAR as fruit;
-    /*insert a modifier here to make the module accessible from outside*/ use self::veggies::CUCUMBER as veggie;
+    pub use self::fruits::PEAR as fruit;
+    pub use self::veggies::CUCUMBER as veggie;
 
     mod fruits {
         pub const PEAR: &'static str = "Pear";

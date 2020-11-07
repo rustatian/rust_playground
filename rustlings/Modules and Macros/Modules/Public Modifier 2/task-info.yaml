@@ -15,18 +15,18 @@ files:
   visible: true
   placeholders:
   - offset: 27
-    length: 69
+    length: 3
     placeholder_text: /*insert a modifier here to make the module accessible from
       outside*/
     initial_state:
       length: 69
       offset: 27
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: pub
-  - offset: 134
-    length: 69
+  - offset: 68
+    length: 3
     placeholder_text: /*insert a modifier here to make the module accessible from
       outside*/
     initial_state:
@@ -34,7 +34,7 @@ files:
       offset: 134
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: pub
   text: |
     mod delicious_snacks {
@@ -82,5 +82,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 16:27:46 UTC
 record: -1
