@@ -12,7 +12,7 @@ macro_rules! vec2 {
 }
 
 fn main() {
-    let v: Vec<u32> = vec![1, 2, 3];
+    let v = vec2![1, 2, 3];
     println!("{:?}", v);
 }
 
