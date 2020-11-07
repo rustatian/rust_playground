@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 82
-    length: 34
+    length: 1
     placeholder_text: /*separate the "macro arms" here*/
     initial_state:
       length: 34
       offset: 82
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: ;
   text: |
     macro_rules! my_macro {
@@ -51,5 +51,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 19:31:13 UTC
 record: -1
