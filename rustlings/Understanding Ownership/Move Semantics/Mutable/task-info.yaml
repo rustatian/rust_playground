@@ -15,14 +15,14 @@ files:
   visible: true
   placeholders:
   - offset: 48
-    length: 37
+    length: 3
     placeholder_text: /*insert the necessary keyword here*/
     initial_state:
       length: 37
       offset: 48
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: mut
   text: |
     fn main() {
@@ -72,5 +72,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 13:00:13 UTC
 record: -1
