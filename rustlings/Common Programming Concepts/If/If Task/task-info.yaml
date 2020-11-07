@@ -29,14 +29,14 @@ files:
   visible: true
   placeholders:
   - offset: 43
-    length: 26
+    length: 49
     placeholder_text: //insert the solution here
     initial_state:
       length: 26
       offset: 43
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: |-
       if a > b {a}
           else {b}
@@ -45,5 +45,8 @@ files:
         //insert the solution here
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 07 Nov 2020 09:11:38 UTC
 record: -1
