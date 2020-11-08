@@ -11,45 +11,45 @@ files:
 - name: src/lib.rs
   visible: true
   placeholders:
-  - offset: 187
-    length: 3
+  - offset: 191
+    length: 21
     placeholder_text: ???
     initial_state:
       length: 3
       offset: 187
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: Box<error::Error>
-  - offset: 254
-    length: 33
+  - offset: 276
+    length: 1
     placeholder_text: /*something could go wrong here*/
     initial_state:
       length: 33
       offset: 254
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: '?'
-  - offset: 327
-    length: 33
+  - offset: 317
+    length: 1
     placeholder_text: /*something could go wrong here*/
     initial_state:
       length: 33
       offset: 327
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: '?'
-  - offset: 411
-    length: 33
+  - offset: 369
+    length: 1
     placeholder_text: /*something could go wrong here*/
     initial_state:
       length: 33
       offset: 411
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: '?'
   text: |-
     use std::error;
@@ -155,5 +155,8 @@ files:
         assert_eq!(Err(CreationError::Zero), PositiveNonzeroInteger::new(0));
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 08 Nov 2020 21:54:29 UTC
 record: -1
