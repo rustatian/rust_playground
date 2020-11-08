@@ -19,7 +19,7 @@ files:
       offset: 163
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: String::from
   - offset: 182
     length: 1
@@ -29,7 +29,7 @@ files:
       offset: 210
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: )
   text: |
     fn main() {
@@ -56,5 +56,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 08 Nov 2020 14:46:40 UTC
 record: -1
