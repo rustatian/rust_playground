@@ -11,8 +11,14 @@ pub enum CreationError {
 
 impl PositiveNonzeroInteger {
     pub fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-        /*here could be the expression to compare if the value is appropriate*/
+        if value > 0 {
             Ok(PositiveNonzeroInteger(value as u64))
-        /*here could be the othere arms of the comparison*/
+        }
+        else if value < 0 {
+            Err(CreationError::Negative)
+        }
+        else {
+            Err(CreationError::Zero)
+        }
     }
 }
