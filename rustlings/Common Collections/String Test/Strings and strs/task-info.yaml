@@ -15,103 +15,103 @@ files:
   visible: true
   placeholders:
   - offset: 118
-    length: 4
+    length: 12
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 118
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: string_slice
-  - offset: 136
-    length: 4
+  - offset: 144
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 136
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: 'string      '
-  - offset: 165
-    length: 4
+  - offset: 175
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 165
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: 'string      '
-  - offset: 195
-    length: 4
+  - offset: 207
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 195
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: 'string      '
-  - offset: 232
-    length: 4
+  - offset: 246
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 232
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: string_slice
-  - offset: 265
-    length: 4
+  - offset: 281
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 265
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: 'string      '
-  - offset: 315
-    length: 4
+  - offset: 333
+    length: 12
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 315
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: string_slice
-  - offset: 353
-    length: 4
+  - offset: 379
+    length: 12
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 353
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: string_slice
-  - offset: 388
-    length: 4
+  - offset: 422
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 388
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: 'string      '
-  - offset: 450
-    length: 4
+  - offset: 486
+    length: 6
     placeholder_text: TODO
     initial_state:
       length: 4
       offset: 450
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Unchecked
     encrypted_possible_answer: 'string      '
   text: |-
