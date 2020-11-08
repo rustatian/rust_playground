@@ -40,7 +40,7 @@ pub enum CreationError {
 
 impl fmt::Display for CreationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str((self as &error::Error).description())
+        f.write_str((self as &dyn error::Error).description())
     }
 }
 
