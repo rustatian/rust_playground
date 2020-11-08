@@ -22,7 +22,7 @@ files:
       offset: 118
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: string_slice
   - offset: 144
     length: 6
@@ -32,7 +32,7 @@ files:
       offset: 136
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: 'string      '
   - offset: 175
     length: 6
@@ -42,7 +42,7 @@ files:
       offset: 165
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: 'string      '
   - offset: 207
     length: 6
@@ -52,7 +52,7 @@ files:
       offset: 195
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: 'string      '
   - offset: 246
     length: 6
@@ -62,7 +62,7 @@ files:
       offset: 232
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: string_slice
   - offset: 281
     length: 6
@@ -72,7 +72,7 @@ files:
       offset: 265
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: 'string      '
   - offset: 333
     length: 12
@@ -82,7 +82,7 @@ files:
       offset: 315
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: string_slice
   - offset: 379
     length: 12
@@ -92,7 +92,7 @@ files:
       offset: 353
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: string_slice
   - offset: 422
     length: 6
@@ -102,7 +102,7 @@ files:
       offset: 388
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: 'string      '
   - offset: 486
     length: 6
@@ -112,7 +112,7 @@ files:
       offset: 450
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: 'string      '
   text: |-
     fn string_slice(arg: &str) { println!("{}", arg); }
@@ -171,5 +171,8 @@ files:
         assert!(actual_as_string.contains(expected_my_shift_key_is_sticky), "The output is missing the line \"my shift key is sticky\"");
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 08 Nov 2020 14:48:50 UTC
 record: -1
