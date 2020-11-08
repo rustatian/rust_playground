@@ -4,7 +4,7 @@ fn main() {
     let last = list.pop().unwrap();
     println!("The last item in the list is {:?}", last);
 
-    let second_to_last = list.pop().unwrap()/*return 3 even if the pop panicks*/;
+    let second_to_last = list.pop().unwrap_or(3);
     println!(
         "The second-to-last item in the list is {:?}",
         second_to_last

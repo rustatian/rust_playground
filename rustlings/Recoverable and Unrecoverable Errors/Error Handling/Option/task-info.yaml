@@ -15,14 +15,14 @@ files:
   visible: true
   placeholders:
   - offset: 170
-    length: 45
+    length: 14
     placeholder_text: .unwrap()/*return 3 even if the pop panicks*/
     initial_state:
       length: 45
       offset: 170
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: .unwrap_or(3)
   text: |
     fn main() {
@@ -65,5 +65,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 08 Nov 2020 21:57:31 UTC
 record: -1
