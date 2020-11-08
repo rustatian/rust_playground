@@ -1,5 +1,6 @@
-use std::io::{ErrorKind};
+use std::io::{ErrorKind, Read};
 use std::fs::File;
+use std::io;
 
 fn main() {
     // let f = std::fs::File::open("hello.txt");
@@ -29,4 +30,10 @@ fn main() {
             panic!("error opening");
         }
     });
+}
+
+fn read_username() -> Result<String, io::Error> {
+    let mut s = String::new();
+    File::open("hello.txt")?.read_to_string(&mut s);
+    Ok(s)
 }
