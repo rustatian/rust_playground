@@ -19,7 +19,7 @@ files:
       length: 73
       offset: 198
     initialized_from_dependency: false
-    selected: false
+    selected: true
     status: Solved
     encrypted_possible_answer: '?'
   text: |

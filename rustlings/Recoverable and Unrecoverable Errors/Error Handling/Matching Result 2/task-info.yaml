@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 154
-    length: 1
+    length: 108
     placeholder_text: '?'
     initial_state:
       length: 1
       offset: 154
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: |2-
        {
               Ok(cost) => cost,
@@ -65,5 +65,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 08 Nov 2020 21:52:05 UTC
 record: -1
