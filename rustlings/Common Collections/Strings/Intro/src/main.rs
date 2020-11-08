@@ -1,3 +1,4 @@
 fn main() {
-    // put you code here to launch it
+    let s1 = String::from("hello");
+    let aa = &s1[..];
 }
