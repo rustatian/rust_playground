@@ -12,7 +12,7 @@ files:
   visible: true
   placeholders:
   - offset: 198
-    length: 73
+    length: 1
     placeholder_text: /*this is the short way, but you can just match the result of
       the parse*/
     initial_state:
@@ -20,7 +20,7 @@ files:
       offset: 198
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: '?'
   text: |
     use std::num::ParseIntError;
@@ -51,5 +51,8 @@ files:
         );
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 08 Nov 2020 21:48:49 UTC
 record: -1
