@@ -2,7 +2,7 @@ use std::thread;
 use std::time::Duration;
 
 fn main() {
-    thread::spawn(|| {
+    let handle = thread::spawn(|| {
         for i in 1..10 {
             println!("{}", i);
             thread::sleep(Duration::from_millis(10));
@@ -12,4 +12,5 @@ fn main() {
         println!("{}", i);
         thread::sleep(Duration::from_millis(10));
     }
+    handle.join().unwrap();
 }
