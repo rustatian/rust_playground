@@ -14,6 +14,15 @@ pub struct NotDivisibleError {
 // Otherwise, it should return a suitable error.
 pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
     /*implement the function here*/
+    if b == 0 {
+        Err(DivisionError::DivideByZero)
+    }
+    else if a % b == 0 {
+        Ok(a/b)
+    }
+    else {
+        Err(DivisionError::NotDivisible(NotDivisibleError{ dividend: a, divisor: b }))
+    }
 }
 
 #[cfg(test)]
@@ -26,14 +35,15 @@ mod tests {
     fn result_with_list() {
         let numbers = vec![27, 297, 38502, 81];
         let division_results = numbers.into_iter().map(|n| divide(n, 27));
-        let x= //fill in the correct expression for x here
+        let x = division_results.collect::<Result<Vec<_>, _>>();//map(|n| Result(Ok(n.unwrap()))).collect();
         assert_eq!(format!("{:?}", x), "Ok([1, 11, 1426, 3])");
     }
+
     #[test]
     fn list_of_results() {
         let numbers = vec![27, 297, 38502, 81];
         let division_results = numbers.into_iter().map(|n| divide(n, 27));
-        let x = //fill in the correct expression for x here
+        let x = division_results.collect::<Vec<Result<i32, _>>>();
         assert_eq!(format!("{:?}", x), "[Ok(1), Ok(11), Ok(1426), Ok(3)]");
     }
 }
