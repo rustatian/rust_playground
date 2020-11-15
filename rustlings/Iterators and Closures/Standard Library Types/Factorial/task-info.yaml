@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 40
-    length: 29
+    length: 393
     placeholder_text: //Implement the function here
     initial_state:
       length: 29
       offset: 40
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: |-
       if num == 1 {
               return 1;
@@ -52,5 +52,8 @@ files:
         assert_eq!(24, factorial(4));
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 15 Nov 2020 18:55:19 UTC
 record: -1
