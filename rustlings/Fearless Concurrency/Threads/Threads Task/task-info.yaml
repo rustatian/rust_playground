@@ -15,35 +15,35 @@ files:
   visible: true
   placeholders:
   - offset: 157
-    length: 50
+    length: 62
     placeholder_text: 'JobStatus { jobs_completed: 0 }/*try using Mutex*/'
     initial_state:
       length: 50
       offset: 157
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 'Mutex::new(JobStatus { jobs_completed: 0 })'
-  - offset: 384
-    length: 72
+  - offset: 401
+    length: 16
     placeholder_text: /*you probably would like to lock the value modified in another
       thread*/
     initial_state:
       length: 72
       offset: 384
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: lock().unwrap().
-  - offset: 512
-    length: 41
+  - offset: 473
+    length: 16
     placeholder_text: /*you should lock the status value here*/
     initial_state:
       length: 41
       offset: 512
     initialized_from_dependency: false
     selected: false
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: lock().unwrap().
   text: |
     use std::sync::{Arc, Mutex};
@@ -115,5 +115,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 15 Nov 2020 21:10:15 UTC
 record: -1
