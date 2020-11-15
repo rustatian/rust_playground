@@ -1,3 +1,6 @@
+use std::sync::mpsc;
+
 fn main() {
-    // put you code here to launch it
+    // mpsc - multiple producer single consumer
+    let (tx, rx) = mpsc::channel();
 }
