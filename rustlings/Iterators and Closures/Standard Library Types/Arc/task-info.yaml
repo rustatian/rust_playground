@@ -15,24 +15,24 @@ files:
   visible: true
   placeholders:
   - offset: 124
-    length: 40
+    length: 17
     placeholder_text: /*it should be an Arc from the numbers*/
     initial_state:
       length: 40
       offset: 124
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: Arc::new(numbers)
-  - offset: 238
-    length: 25
+  - offset: 215
+    length: 48
     placeholder_text: /*declare child_numbers*/
     initial_state:
       length: 25
       offset: 238
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: let child_numbers = shared_numbers.clone();
   text: |
     use std::sync::Arc;
@@ -115,5 +115,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 15 Nov 2020 17:22:31 UTC
 record: -1
