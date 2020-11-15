@@ -1,13 +1,15 @@
 fn main() {
     let v1 = vec![1, 2, 3];
-    let v1_clone = v1.clone();
-    let v1_iter = v1_clone.iter();
+    let v1_iter = v1.iter();
 
-    let mut v2_iter = v1.iter();
 
     for val in v1_iter {
         println!("Got: {}", val);
     }
 
-    println!("{}", v2_iter.next().unwrap());
+    let v2_iter = v1.into_iter();
+    for mut val in v2_iter {
+        val = 4;
+    }
+    println!("{:?}", "fasd");
 }
