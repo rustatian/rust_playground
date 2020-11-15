@@ -12,14 +12,14 @@ files:
   visible: true
   placeholders:
   - offset: 85
-    length: 47
+    length: 10
     placeholder_text: /*insert a correct assertion to pass the task*/
     initial_state:
       length: 47
       offset: 85
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 1, 1
   text: |-
     #[cfg(test)]
@@ -30,6 +30,8 @@ files:
         }
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  time: Sun, 15 Nov 2020 11:21:31 UTC
 record: -1
 post_submission_on_open: true
