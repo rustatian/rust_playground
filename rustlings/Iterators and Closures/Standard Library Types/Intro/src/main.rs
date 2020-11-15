@@ -48,4 +48,6 @@ fn calling_next_directly() {
     assert_eq!(counter.next(), Some(4));
     assert_eq!(counter.next(), Some(5));
     assert_eq!(counter.next(), None);
+
+    let sum: u32 = Counter::new().zip(Counter::new().skip(1)).map(|(a, b)| a * b).filter(|x| x % 3 == 0).sum();
 }
