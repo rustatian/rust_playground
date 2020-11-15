@@ -2,15 +2,9 @@ use std::thread;
 use std::time::Duration;
 
 fn main() {
-    let handle = thread::spawn(|| {
-        for i in 1..10 {
-            println!("{}", i);
-            thread::sleep(Duration::from_millis(10));
-        }
+    let v = vec![1, 2, 3];
+    let handle = thread::spawn(move || {
+        println!("{:?}", v);
     });
-    for i in 1..5 {
-        println!("{}", i);
-        thread::sleep(Duration::from_millis(10));
-    }
     handle.join().unwrap();
 }
