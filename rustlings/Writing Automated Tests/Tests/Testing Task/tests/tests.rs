@@ -4,12 +4,12 @@ mod tests {
 
     #[test]
     fn is_true_when_even() {
-        assert!(is_even(/*insert the parameter for the assertion here*/));
+        assert!(is_even(2));
     }
 
     #[test]
     fn is_false_when_odd() {
-        assert_eq!(is_even(/*insert the parameter for the assertion here*/), false);
+        assert_eq!(is_even(3), false);
     }
 }
 

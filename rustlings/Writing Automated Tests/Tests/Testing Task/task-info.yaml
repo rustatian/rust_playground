@@ -19,24 +19,24 @@ files:
   visible: true
   placeholders:
   - offset: 122
-    length: 47
+    length: 1
     placeholder_text: /*insert the parameter for the assertion here*/
     initial_state:
       length: 47
       offset: 122
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 2
-  - offset: 248
-    length: 47
+  - offset: 202
+    length: 1
     placeholder_text: /*insert the parameter for the assertion here*/
     initial_state:
       length: 47
       offset: 248
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 5
   text: |+
     #[cfg(test)]
@@ -60,5 +60,8 @@ files:
 
 
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 15 Nov 2020 11:22:30 UTC
 record: -1
