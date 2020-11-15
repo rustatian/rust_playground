@@ -18,8 +18,8 @@ files:
       length: 4
       offset: 79
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: "true"
   text: |-
     #[cfg(test)]
@@ -30,6 +30,8 @@ files:
         }
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  time: Sun, 15 Nov 2020 11:20:54 UTC
 record: -1
 post_submission_on_open: true
