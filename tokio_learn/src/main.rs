@@ -6,7 +6,9 @@ async fn main() {
     let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
     loop {
         let (socket, _) = listener.accept().await.unwrap();
-        process(socket).await;
+        tokio::spawn(async move {
+            process(socket).await;
+        });
     }
 }
 
@@ -20,4 +22,14 @@ async fn process(socket: TcpStream) {
         let response = Frame::Error("unimplemented".into());
         connection.write_frame(&response).await.unwrap();
     }
+}
+
+// get data from tokio::spawn
+async fn data() {
+    let handle = tokio::spawn(async {
+        "return value"
+    });
+
+    let out = handle.await.unwrap();
+    println!("{}", out);
 }
