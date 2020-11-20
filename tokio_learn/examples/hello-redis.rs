@@ -1,17 +1,35 @@
 use mini_redis::{client, Result};
+use bytes::Bytes;
+use tokio::sync::mpsc;
 
 #[tokio::main]
-pub async fn main() -> Result<()> {
+pub async fn main() {
     // Open a connection to the mini-redis address.
-    let mut client = client::connect("127.0.0.1:6379").await?;
+    let mut client = client::connect("127.0.0.1:6379").await.unwrap();
 
-    // Set the key "hello" with value "world"
-    client.set("hello", "world".into()).await?;
+    let (mut tx, mut rx) = mpsc::channel(32); // 32 is the cap
 
-    // Get key "hello"
-    let result = client.get("hello").await?;
+    let t1 = tokio::spawn(async {
+        tx.send("sending from the first channel").await;
+    });
 
-    println!("got value from the server; result={:?}", result);
+    let mut tx2 = tx.clone();
+    let t2 = tokio::spawn(async {
+        tx2.send("sending from the second channel").await;
+    });
 
-    Ok(())
+    while let Some(message) = rx.recv().await {
+        println!("got an message: {}", message);
+    }
+}
+
+#[derive(Debug)]
+enum Command {
+    Get {
+        key: String,
+    },
+    Set {
+        key: String,
+        val: Bytes,
+    },
 }
