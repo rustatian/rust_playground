@@ -1,22 +1,8 @@
-use mini_redis::{client, Result};
+use mini_redis::{Connection, Frame};
+use tokio::net::{TcpListener, TcpStream};
 
 #[tokio::main]
 async fn main() {
-    // let mut client = client::connect("127.0.0.1:6379").await?;
-    // client.set("hello", "world".into()).await?;
-    //
-    // let result = client.get("hello").await?;
-    //
-    // println!("got result: {:?}", result);
-    //
-    // Ok(())
-    let op = say();
-
-    println!("Hello");
-
-    op.await;
-}
-
-async fn say() {
-    println!("hey");
+    let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
+    
 }
