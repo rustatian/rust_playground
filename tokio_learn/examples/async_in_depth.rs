@@ -12,34 +12,7 @@ async fn main() {
     println!("out: {}", out);
 }
 
-struct Delay {
-    when: Instant,
-}
 
-impl Future for Delay {
-    type Output = &'static str;
-
-    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        if Instant::now() >= self.when {
-            println!("hello");
-            Poll::Ready("done")
-        } else {
-            // get a handle to the waker for the current task
-            let waker = cx.waker().clone();
-            let when = self.when;
-
-            // spawn a timer thread
-            std::thread::spawn(move || {
-                let now = Instant::now();
-                if now < when {
-                    std::thread::sleep(when - now);
-                }
-                waker.wake();
-            });
-            Poll::Pending
-        }
-    }
-}
 
 enum MainFuture {
     // initialized
