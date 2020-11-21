@@ -27,6 +27,7 @@ impl MiniTokio {
         self.tasks.push_back(Box::pin(future));
     }
 
+    // this approach will burn CPU as we polling every future in the queue
     fn run(&mut self) {
         // create noop waker
         let waker = task::noop_waker();

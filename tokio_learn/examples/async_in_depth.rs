@@ -24,7 +24,18 @@ impl Future for Delay {
             println!("hello");
             Poll::Ready("done")
         } else {
-            cx.waker().wake_by_ref();
+            // get a handle to the waker for the current task
+            let waker = cx.waker().clone();
+            let when = self.when;
+
+            // spawn a timer thread
+            std::thread::spawn(move || {
+                let now = Instant::now();
+                if now < when {
+                    std::thread::sleep(when - now);
+                }
+                waker.wake();
+            });
             Poll::Pending
         }
     }
@@ -61,7 +72,7 @@ impl Future for MainFuture {
                         Poll::Pending => {
                             Poll::Pending
                         }
-                    }
+                    };
                 }
                 Terminated => {
                     panic!("future polled after competition");
