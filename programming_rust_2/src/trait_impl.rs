@@ -9,10 +9,10 @@ pub trait OffThreadExt: Iterator {
     fn off_thread(self) -> mpsc::IntoIter<Self::Item>;
 }
 
-impl<T> OffThreadExt for T
+impl<T: 'static> OffThreadExt for T
 where
-    T: Iterator + Send + Sync + 'static,
-    T::Item: Send + 'static,
+    T: Iterator + Send + Sync,
+    T::Item: Send,
 {
     fn off_thread(self) -> IntoIter<Self::Item> {
         let (sender, receiver) = mpsc::sync_channel(1024);
