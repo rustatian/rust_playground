@@ -1,7 +1,14 @@
 use std::io;
 use std::collections::HashMap;
+use rayon::prelude::*;
+extern crate rayon;
 
 fn main() {
+    //let (v1, v2) = rayon::join(println!("Hello, world1!"), println!("Hello, world2!"));
+
+    // do n operations
+    // let giant_vector = vec![];
+    // giant_vector.par_iter().for_each(|value| do_things_with_value());
     println!("Hello, world!");
 }
 
