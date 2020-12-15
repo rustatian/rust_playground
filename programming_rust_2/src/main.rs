@@ -16,6 +16,8 @@ fn process_files_in_parallel(filenames: Vec<String>, glossary: std::sync::Arc<Ha
     // fork: spawn a thread to handle each chunk
     let mut thread_handles = vec![];
     for worklist in worklists {
+        // This call to .clone() only clones the Arc and bumps the
+        // reference count. It does not clone the GigabyteMap.
         let glossary_clone = glossary.clone();
         thread_handles.push(
             std::thread::spawn(move || {
