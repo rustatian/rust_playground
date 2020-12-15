@@ -1,6 +1,10 @@
+mod trait_impl;
+
 use rayon::prelude::*;
 use std::collections::HashMap;
 use std::io;
+use std::thread::spawn;
+use std::sync::mpsc::channel;
 
 fn main() {
     //let (v1, v2) = rayon::join(println!("Hello, world1!"), println!("Hello, world2!"));
@@ -9,10 +13,24 @@ fn main() {
     // let giant_vector = vec![];
     // giant_vector.par_iter().for_each(|value| do_things_with_value());
     println!("Hello, world!");
+    for arg in std::env::args() {
+
+    }
+
+
+
+    // let (sender, receiver) = channel();
+    // 
+    // let handle = spawn(move || {
+    // 
+    // });
+
 }
 
 // just stub
-fn process_files(filenames: Vec<String>, glossary_child: &HashMap<i32, i32>) {}
+fn process_files(filenames: Vec<String>, glossary_child: &HashMap<i32, i32>) {
+
+}
 
 fn process_files2(filename: String, glossary_child: &HashMap<i32, i32>) {}
 
@@ -42,13 +60,13 @@ fn process_files_in_parallel(
     Ok(())
 }
 
-fn process_with_rayon(filenames: Vec<String>, glossary: &HashMap<i32, i32>) -> io::Result<()> {
-    filenames
-        .par_iter()
-        .map(|filename| process_files2(*filename, glossary))
-        .reduce_with(|r1, r2| if r1.is_err() { r1 } else { r2 })
-        .unwrap_ok(Ok(()))
-}
+// fn process_with_rayon(filenames: Vec<String>, glossary: &HashMap<i32, i32>) -> io::Result<()> {
+//     filenames
+//         .par_iter()
+//         .map(|filename| process_files2(*filename, glossary))
+//         .reduce_with(|r1, r2| if r1.is_err() { r1 } else { r2 })
+//         .unwrap_ok(Ok(()))
+// }
 
 fn triangle(n: i32) -> i32 {
     (1..n + 1).fold(0, |sum, item| sum + item)
