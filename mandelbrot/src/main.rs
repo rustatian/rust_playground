@@ -18,6 +18,10 @@ fn escape_time(c: Complex<f64>, limit: u32) -> Option<u32> {
     None
 }
 
+/// Parse row `s` which contains coordinates pairs, for example `400x600` or `1.0,0.5`
+/// `s` should be in the form of <left><sep><right> where:
+/// `sep` -> separator `char`
+/// `<left>` and `<right>` are strings implementing T::from_str
 fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
     match s.find(separator) {
         None => None,
@@ -27,3 +31,5 @@ fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
         },
     }
 }
+
+
