@@ -39,6 +39,23 @@ fn parse_complex(s: &str) -> Option<Complex<f64>> {
     }
 }
 
+fn pixel_to_point(
+    bounds: (usize, usize),
+    pixel: (usize, usize),
+    upper_left: Complex<f64>,
+    lower_right: Complex<f64>,
+) -> Complex<f64> {
+    let (width, heigth) = (
+        lower_right.re - upper_left.re,
+        upper_left.im - lower_right.im,
+    );
+
+    Complex {
+        re: upper_left.re + pixel.0 as f64 * width / bounds.0 as f64,
+        im: upper_left.im - pixel.1 as f64 * heigth / bounds.1 as f64,
+    }
+}
+
 #[test]
 fn test_parse_pair() {
     assert_eq!(parse_pair::<i32>("", ','), None);
