@@ -1,14 +1,14 @@
 extern crate image;
 extern crate num;
-use image::codecs::png::PngEncoder;
 use image::ColorType;
 use num::Complex;
 use std::fs::File;
 use std::str::FromStr;
+use image::png::PNGEncoder;
 
 fn main() {
     let bounds = parse_pair("3840x2160", 'x').expect("error");
-    let upper_left = parse_complex("-1.20,0.35").expect("error");
+    let upper_left = parse_complex("-1.20,0.37").expect("error");
     let lower_right = parse_complex("-1,0.20").expect("error");
 
     let mut pixels = vec![0; bounds.0 * bounds.1];
@@ -72,7 +72,7 @@ fn render(
     upper_left: Complex<f64>,
     lower_rigth: Complex<f64>,
 ) {
-    assert!(pixels.len() == bounds.0 * bounds.1);
+    assert_eq!(pixels.len(), bounds.0 * bounds.1);
     for row in 0..bounds.1 {
         for column in 0..bounds.0 {
             let point = pixel_to_point(bounds, (column, row), upper_left, lower_rigth);
@@ -90,8 +90,8 @@ fn write_image(
     bounds: (usize, usize),
 ) -> Result<(), std::io::Error> {
     let output = File::create(filename)?;
-    let encoder = PngEncoder::new(output);
-    let _ = encoder.encode(&pixels, bounds.0 as u32, bounds.1 as u32, ColorType::Bgr8);
+    let encoder = PNGEncoder::new(output);
+    encoder.encode(&pixels, bounds.0 as u32, bounds.1 as u32, ColorType::Gray(8))?;
     Ok(())
 }
 
