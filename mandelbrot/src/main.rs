@@ -1,9 +1,19 @@
+extern crate image;
 extern crate num;
+use image::codecs::png::PngEncoder;
+use image::ColorType;
 use num::Complex;
+use std::fs::File;
 use std::str::FromStr;
 
 fn main() {
-    println!("Hello, world!");
+    let bounds = parse_pair("3840x2160", 'x').expect("error");
+    let upper_left = parse_complex("-1.20,0.35").expect("error");
+    let lower_right = parse_complex("-1,0.20").expect("error");
+
+    let mut pixels = vec![0; bounds.0 * bounds.1];
+    render(&mut pixels, bounds, upper_left, lower_right);
+    write_image("test.png", &pixels, bounds).expect("error");
 }
 
 fn escape_time(c: Complex<f64>, limit: u32) -> Option<u32> {
@@ -72,6 +82,17 @@ fn render(
             };
         }
     }
+}
+
+fn write_image(
+    filename: &str,
+    pixels: &[u8],
+    bounds: (usize, usize),
+) -> Result<(), std::io::Error> {
+    let output = File::create(filename)?;
+    let encoder = PngEncoder::new(output);
+    let _ = encoder.encode(&pixels, bounds.0 as u32, bounds.1 as u32, ColorType::Bgr8);
+    Ok(())
 }
 
 #[test]
