@@ -32,4 +32,8 @@ fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
     }
 }
 
-
+#[test]
+fn test_parse_pair() {
+    assert_eq!(parse_pair::<i32>("", ','), None);
+    assert_eq!(parse_pair::<i32>("600x600", 'x'), Some((600, 600)));
+}
