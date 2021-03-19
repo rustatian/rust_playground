@@ -1,10 +1,10 @@
 extern crate image;
 extern crate num;
+use image::png::PNGEncoder;
 use image::ColorType;
 use num::Complex;
 use std::fs::File;
 use std::str::FromStr;
-use image::png::PNGEncoder;
 
 fn main() {
     let bounds = parse_pair("3840x2160", 'x').expect("error");
@@ -91,7 +91,7 @@ fn write_image(
 ) -> Result<(), std::io::Error> {
     let output = File::create(filename)?;
     let encoder = PNGEncoder::new(output);
-    encoder.encode(&pixels, bounds.0 as u32, bounds.1 as u32, ColorType::Gray(8))?;
+    let _ = encoder.encode(&pixels, bounds.0 as u32, bounds.1 as u32, ColorType::L8);
     Ok(())
 }
 
