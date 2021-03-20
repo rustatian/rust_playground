@@ -39,7 +39,7 @@ async fn main() -> std::io::Result<()> {
             .route("api/v3/networks/{name}", web::get().to(networks))
     })
     .bind(("127.0.0.1", 3001))?
-    .workers(10000)
+    .workers(1000)
     .run()
     .await
 }
