@@ -2,7 +2,7 @@ use actix_web::{web, App, HttpRequest, HttpServer, Responder};
 use serde_json::json;
 use uuid::Uuid;
 
-async fn devices(req: HttpRequest) -> impl Responder {
+async fn devices(_req: HttpRequest) -> impl Responder {
     let mut related_dev_groups = vec![];
     let mut tags = vec![];
 
@@ -24,7 +24,7 @@ async fn devices(req: HttpRequest) -> impl Responder {
     value.to_string()
 }
 
-async fn networks(req: HttpRequest) -> impl Responder {
+async fn networks(_req: HttpRequest) -> impl Responder {
     json!({
     "parentId" : Uuid::new_v4().to_string(),
     })
