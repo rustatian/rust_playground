@@ -36,10 +36,10 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .route("/api/v3/networks/devices/{uuid}", web::get().to(devices))
-            .route("api/v3/networks/{name}", web::get().to(networks))
+            .route("/api/v3/networks/{name}", web::get().to(networks))
     })
-    .bind(("127.0.0.1", 3001))?
-    .workers(1000)
+    .bind(("0.0.0.0", 3001))?
+    .workers(100)
     .run()
     .await
 }
