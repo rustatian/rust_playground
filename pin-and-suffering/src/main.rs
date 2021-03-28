@@ -47,9 +47,9 @@ where
                 self.sleep
                     .as_mut()
                     .reset(Instant::now() + Duration::from_millis(25));
-                // poll inner reader
 
-                self.reader.as_mut().poll_read(cx, buf)
+                // poll inner reader
+                Pin::new(self.reader).as_mut().poll_read(cx, buf)
             }
             Poll::Pending => Poll::Pending,
         }
