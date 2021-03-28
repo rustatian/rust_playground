@@ -1,5 +1,4 @@
 use futures::FutureExt;
-use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::Duration;
@@ -19,7 +18,7 @@ async fn main() -> Result<(), tokio::io::Error> {
 }
 
 struct SlowRead<R> {
-    reader: Pin<Box<R>>,
+    reader: R,
 
     sleep: Pin<Box<Sleep>>,
 }
@@ -27,7 +26,7 @@ struct SlowRead<R> {
 impl<R> SlowRead<R> {
     fn new(reader: R) -> Self {
         Self {
-            reader: Box::pin(reader),
+            reader,
             sleep: Box::pin(tokio::time::sleep(Default::default())),
         }
     }
@@ -35,7 +34,7 @@ impl<R> SlowRead<R> {
 
 impl<R> AsyncRead for SlowRead<R>
 where
-    R: AsyncRead,
+    R: AsyncRead + Unpin,
 {
     fn poll_read(
         mut self: Pin<&mut Self>,
@@ -49,7 +48,7 @@ where
                     .reset(Instant::now() + Duration::from_millis(25));
 
                 // poll inner reader
-                Pin::new(self.reader).as_mut().poll_read(cx, buf)
+                Pin::new(&mut self.reader).poll_read(cx, buf)
             }
             Poll::Pending => Poll::Pending,
         }
