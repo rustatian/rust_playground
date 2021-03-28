@@ -1,6 +1,7 @@
 use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
+use std::time::Duration;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -17,7 +18,13 @@ impl Future for MyFuture {
 
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         println!("MyFuture::poll()");
-        cx.waker().wake_by_ref();
+        
+        let waker = cx.waker().clone();
+        std::thread::spawn(move || {
+            std::thread::sleep(Duration::from_millis(500));
+            waker.wake();
+        });
+
         Poll::Pending
     }
 }
