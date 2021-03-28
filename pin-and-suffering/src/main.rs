@@ -16,6 +16,8 @@ impl Future for MyFuture {
     type Output = ();
 
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        Poll::Ready(())
+        println!("MyFuture::poll()");
+        cx.waker().wake_by_ref();
+        Poll::Pending
     }
 }
