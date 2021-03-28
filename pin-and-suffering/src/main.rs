@@ -1,11 +1,11 @@
 use futures::{Future, FutureExt};
+use pin_project::pin_project;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::Duration;
 use tokio::fs::File;
 use tokio::io::{AsyncRead, AsyncReadExt, ReadBuf};
 use tokio::time::{Instant, Sleep};
-use pin_project::pin_project;
 
 #[tokio::main]
 async fn main() -> Result<(), tokio::io::Error> {
@@ -43,22 +43,16 @@ where
     R: AsyncRead + Unpin,
 {
     fn poll_read(
-        mut self: Pin<&mut Self>,
+        self: Pin<&mut Self>,
         cx: &mut Context<'_>,
         buf: &mut ReadBuf<'_>,
     ) -> Poll<std::io::Result<()>> {
-        let (mut sleep, reader) = unsafe {
-            let this = self.get_unchecked_mut();
-            (
-                Pin::new_unchecked(&mut this.sleep),
-                Pin::new_unchecked(&mut this.reader),
-            )
-        };
+        let mut this = self.project();
 
-        match sleep.as_mut().poll(cx) {
+        match this.sleep.as_mut().poll(cx) {
             Poll::Ready(_) => {
-                sleep.reset(Instant::now() + Duration::from_millis(25));
-                reader.poll_read(cx, buf)
+                this.sleep.reset(Instant::now() + Duration::from_millis(25));
+                this.reader.poll_read(cx, buf)
             }
             Poll::Pending => Poll::Pending,
         }
