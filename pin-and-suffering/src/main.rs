@@ -3,11 +3,20 @@ use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::Duration;
-use tokio::io::{AsyncRead, ReadBuf};
-use tokio::time::Sleep;
+use tokio::fs::File;
+use tokio::io::{AsyncRead, AsyncReadExt, ReadBuf};
+use tokio::time::{Instant, Sleep};
 
-#[tokio::main(flavor = "current_thread")]
-async fn main() {}
+#[tokio::main]
+async fn main() -> Result<(), tokio::io::Error> {
+    let mut buf = vec![0u8; 128 * 1024];
+    let mut f = File::open("/dev/urandom").await?;
+    let before = Instant::now();
+    f.read_exact(&mut buf).await?;
+    println!("Read {} bytes in {:?}", buf.len(), before.elapsed());
+
+    Ok(())
+}
 
 struct SlowRead<R> {
     reader: Pin<Box<R>>,
