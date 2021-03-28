@@ -10,12 +10,14 @@ use tokio::time::Sleep;
 async fn main() {}
 
 struct SlowRead<R> {
-    reader: R,
+    reader: Pin<Box<R>>,
 }
 
 impl<R> SlowRead<R> {
     fn new(reader: R) -> Self {
-        Self { reader: reader }
+        Self {
+            reader: Box::pin(reader),
+        }
     }
 }
 
@@ -24,10 +26,10 @@ where
     R: AsyncRead,
 {
     fn poll_read(
-        self: Pin<&mut Self>,
+        mut self: Pin<&mut Self>,
         cx: &mut Context<'_>,
         buf: &mut ReadBuf<'_>,
     ) -> Poll<std::io::Result<()>> {
-        self.reader.poll_read(cx, buf)
+        self.reader.as_mut().poll_read(cx, buf)
     }
 }
