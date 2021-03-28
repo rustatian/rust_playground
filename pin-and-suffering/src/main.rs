@@ -1,5 +1,5 @@
-use std::thread::sleep;
 use std::time::Duration;
+use tokio::time::sleep;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -11,6 +11,6 @@ async fn main() {
 
 async fn greet() {
     println!("Hello!");
-    sleep(Duration::from_millis(500));
+    sleep(Duration::from_millis(500)).await;
     println!("Good Bye!");
 }
