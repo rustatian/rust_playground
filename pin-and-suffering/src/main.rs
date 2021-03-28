@@ -1,4 +1,4 @@
-use futures::FutureExt;
+use futures::{Future, FutureExt};
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::Duration;
@@ -11,6 +11,7 @@ async fn main() -> Result<(), tokio::io::Error> {
     let mut buf = vec![0u8; 128 * 1024];
     let mut f = SlowRead::new(File::open("/dev/urandom").await?);
     let before = Instant::now();
+    let mut f = unsafe { Pin::new_unchecked(&mut f) };
     f.read_exact(&mut buf).await?;
     println!("Read {} bytes in {:?}", buf.len(), before.elapsed());
 
@@ -19,15 +20,14 @@ async fn main() -> Result<(), tokio::io::Error> {
 
 struct SlowRead<R> {
     reader: R,
-
-    sleep: Pin<Box<Sleep>>,
+    sleep: Sleep,
 }
 
 impl<R> SlowRead<R> {
     fn new(reader: R) -> Self {
         Self {
             reader,
-            sleep: Box::pin(tokio::time::sleep(Default::default())),
+            sleep: tokio::time::sleep(Default::default()),
         }
     }
 }
@@ -41,14 +41,16 @@ where
         cx: &mut Context<'_>,
         buf: &mut ReadBuf<'_>,
     ) -> Poll<std::io::Result<()>> {
-        match self.sleep.poll_unpin(cx) {
+        let sleep = unsafe { self.as_mut().map_unchecked_mut(|this| &mut this.sleep) };
+
+        match sleep.poll(cx) {
             Poll::Ready(_) => {
-                self.sleep
-                    .as_mut()
-                    .reset(Instant::now() + Duration::from_millis(25));
+                let sleep = unsafe { self.as_mut().map_unchecked_mut(|this| &mut this.sleep) };
+                sleep.reset(Instant::now() + Duration::from_millis(25));
 
                 // poll inner reader
-                Pin::new(&mut self.reader).poll_read(cx, buf)
+                let reader = unsafe { self.as_mut().map_unchecked_mut(|this| &mut this.reader) };
+                reader.poll_read(cx, buf)
             }
             Poll::Pending => Poll::Pending,
         }
