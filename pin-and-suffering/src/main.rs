@@ -1,3 +1,4 @@
+use futures::FutureExt;
 use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -29,6 +30,7 @@ impl Future for MyFuture {
 
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         println!("MyFuture::poll()");
-        self.sleep.as_mut().poll(cx)
+        // self.sleep.as_mut().poll(cx)
+        self.sleep.poll_unpin(cx)
     }
 }
