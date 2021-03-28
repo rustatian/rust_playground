@@ -5,6 +5,7 @@ use std::time::Duration;
 use tokio::fs::File;
 use tokio::io::{AsyncRead, AsyncReadExt, ReadBuf};
 use tokio::time::{Instant, Sleep};
+use pin_project::pin_project;
 
 #[tokio::main]
 async fn main() -> Result<(), tokio::io::Error> {
@@ -20,8 +21,11 @@ async fn main() -> Result<(), tokio::io::Error> {
     Ok(())
 }
 
+#[pin_project]
 struct SlowRead<R> {
+    #[pin]
     reader: R,
+    #[pin]
     sleep: Sleep,
 }
 
