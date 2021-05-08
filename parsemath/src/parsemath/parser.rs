@@ -1,6 +1,10 @@
 use crate::parsemath::token::Token;
 use crate::parsemath::tokenizer::Tokenizer;
-use std::string::ParseError;
+
+pub enum ParseError {
+    UnableToParse(String),
+    InvalidOperator(String),
+}
 
 struct Parser<'a> {
     tokenizer: Tokenizer<'a>,
@@ -12,7 +16,7 @@ impl<'a> Parser<'a> {
         let mut lexer = Tokenizer::new(expr);
         let cur_token = match lexer.next() {
             Some(token) => token,
-            None => return Err(ParseError::Invalid),
+            None => return Err(ParseError::InvalidOperator("Invalid character".into())),
         };
 
         Ok(Parser {
