@@ -2,6 +2,7 @@ use lazy_static::lazy_static;
 use rand::distributions::{Distribution, Uniform};
 use std::time::Duration;
 use tokio::time::{sleep, Instant};
+use futures::Stream;
 
 lazy_static! {
     static ref START_TIME: Instant = Instant::now();
@@ -11,6 +12,14 @@ lazy_static! {
 async fn main() {
     let page = get_page(42).await;
     println!("Page #42: {:?}", page);
+}
+
+async fn get_n_pages(n: usize) -> Vec<Vec<usize>> {
+   get_pages().take(n).collect().await
+}
+
+fn get_pages() -> impl Stream<Item = Vec<usize>> {
+    todo!()
 }
 
 async fn get_page(i: usize) -> Vec<usize> {
