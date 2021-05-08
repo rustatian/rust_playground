@@ -1,3 +1,12 @@
+#[derive(Debug, PartialOrd, PartialEq)]
+pub enum OperPrec {
+    DefaultZero,
+    AddSub,
+    MulDiv,
+    Power,
+    Negative,
+}
+
 pub enum Token {
     Add,
     Subtract,
