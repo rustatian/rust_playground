@@ -1,4 +1,4 @@
-use futures::{stream, Stream, StreamExt};
+use futures::{Future, Stream, StreamExt, stream};
 use lazy_static::lazy_static;
 use rand::distributions::{Distribution, Uniform};
 use std::time::Duration;
@@ -17,6 +17,17 @@ async fn get_n_pages(n: usize) -> Vec<Vec<usize>> {
     get_pages().take(n).collect().await
 }
 
+async fn gen_n_pages_buffered(n: usize, buf_factor: usize) -> Vec<Vec<usize>> {
+    get_pages_futures().take(n).buffered(buf_factor).collect().await
+}
+
+fn get_pages_buffered(buf_factor: usize) -> impl Stream<Item = Vec<usize>> {
+    get_pages_futures().buffered(buf_factor)
+}
+
+fn get_pages_futures() -> impl Stream<Item = impl Future<Output = Vec<usize>>> {
+    stream::iter(0..).map(|i| get_page(i))
+}
 fn get_pages() -> impl Stream<Item = Vec<usize>> {
     stream::iter(0..).then(|i| get_page(i))
 }
