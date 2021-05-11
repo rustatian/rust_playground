@@ -11,6 +11,7 @@ lazy_static! {
 #[tokio::main]
 async fn main() {
     println!("IDs from first 5 pages:\n{:?}",get_ids_n_pages(5).collect::<Vec<usize>>().await)
+    
 }
 
 fn get_ids_n_pages(n:usize) -> impl Stream<Item = usize> {
