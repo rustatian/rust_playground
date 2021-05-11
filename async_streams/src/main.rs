@@ -10,14 +10,14 @@ lazy_static! {
 
 #[tokio::main]
 async fn main() {
-    println!("First 10 pages:\n{:?}", get_n_pages(10).await)
+    println!("First 10 pages buffered by 5:\n{:?}", get_n_pages_buffered(10, 5).await)
 }
 
 async fn get_n_pages(n: usize) -> Vec<Vec<usize>> {
     get_pages().take(n).collect().await
 }
 
-async fn gen_n_pages_buffered(n: usize, buf_factor: usize) -> Vec<Vec<usize>> {
+async fn get_n_pages_buffered(n: usize, buf_factor: usize) -> Vec<Vec<usize>> {
     get_pages_futures().take(n).buffered(buf_factor).collect().await
 }
 
