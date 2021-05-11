@@ -18,7 +18,7 @@ async fn get_n_pages(n: usize) -> Vec<Vec<usize>> {
 }
 
 async fn get_n_pages_buffered(n: usize, buf_factor: usize) -> Vec<Vec<usize>> {
-    get_pages_futures().take(n).buffered(buf_factor).collect().await
+    get_pages_futures().take(n).buffer_unordered(buf_factor).collect().await
 }
 
 fn get_pages_buffered(buf_factor: usize) -> impl Stream<Item = Vec<usize>> {
