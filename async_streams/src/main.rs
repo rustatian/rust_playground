@@ -26,10 +26,10 @@ fn get_pages_buffered(buf_factor: usize) -> impl Stream<Item = Vec<usize>> {
 }
 
 fn get_pages_futures() -> impl Stream<Item = impl Future<Output = Vec<usize>>> {
-    stream::iter(0..).map(|i| get_page(i))
+    stream::iter(0..).map(get_page)
 }
 fn get_pages() -> impl Stream<Item = Vec<usize>> {
-    stream::iter(0..).then(|i| get_page(i))
+    stream::iter(0..).then(get_page)
 }
 
 async fn get_page(i: usize) -> Vec<usize> {
