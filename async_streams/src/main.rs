@@ -43,7 +43,7 @@ fn get_ids_n_pages_buffered_unordered(n: usize, buf_factor: usize) -> impl Strea
     get_pages_futures()
         .take(n)
         .buffer_unordered(buf_factor)
-        .flat_map(|page: Vec<usize>| stream::iter(page))
+        .flat_map(|page| stream::iter(page))
 }
 async fn get_n_pages(n: usize) -> Vec<Vec<usize>> {
     get_pages().take(n).collect().await
