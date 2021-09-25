@@ -16,8 +16,9 @@ Cargo.lock
 
 /target
 #**/*.rs.b
-variables/.idea
+**/.idea
 **/**/target
+**/target
 
 #Added by cargo
 #
