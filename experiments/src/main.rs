@@ -1,7 +1,6 @@
+use std::io::Write;
+
 fn main() {
-
-}
-
-struct Structure<'a> {
-    reference: &'a u8
+    let mut buf:Vec<u8> = vec![];
+    let writer: &mut Write = &mut buf;
 }
