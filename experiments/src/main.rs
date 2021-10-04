@@ -34,6 +34,13 @@ fn main() {
     let sa: &[f64] = &a;
 
     println!("{:?}", sv);
+
+
+    let mut s = "fooo".to_string();
+    let t = s;
+    s = "foo2".to_string();
+
+    println!("{}, {}", s, t);
 }
 
 fn build_vector() -> Vec<i16> {
