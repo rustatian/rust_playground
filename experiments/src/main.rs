@@ -10,6 +10,30 @@ fn main() {
     let line = "foo foo";
 
     let words: Vec<String> = line.split_whitespace().map(ToString::to_string).collect();
+
+    // array
+    let lazy_caterer: [u32; 6] = [1, 2, 3, 4, 5, 6];
+    let taxonomy = ["Animalia", "Arthropoda", "Insecta"];
+
+    // [type;size]
+    let mut sieve = [true; 10000];
+    for i in 2..100 {
+        if sieve[i] {
+            let mut j = i * i;
+            while j < 10000 {
+                sieve[j] = false;
+                j += i;
+            }
+        }
+    }
+
+    let v: Vec<f64> = vec![0.0, 0.707, 1.0, 0.707];
+    let a: [f64; 4] = [0.0, -0.707, -1.0, -0.707];
+
+    let sv: &[f64] = &v;
+    let sa: &[f64] = &a;
+
+    println!("{:?}", sv);
 }
 
 fn build_vector() -> Vec<i16> {
@@ -38,9 +62,7 @@ fn collect_into_vector<I: std::iter::Iterator>(iter: I) -> Vec<I::Item> {
     results
 }
 
-struct Args {
-
-}
+struct Args {}
 
 impl Iterator for Args {
     type Item = String;
