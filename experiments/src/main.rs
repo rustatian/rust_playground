@@ -12,6 +12,13 @@ fn main() {
     let words: Vec<String> = line.split_whitespace().map(ToString::to_string).collect();
 }
 
+fn build_vector() -> Vec<i16> {
+    let mut vec = vec![];
+    vec.push(10);
+    vec.push(11);
+    vec
+}
+
 trait Visible {
     fn hit_set(&self, x: i32, y: i32) -> bool;
 }
@@ -29,4 +36,16 @@ fn collect_into_vector<I: std::iter::Iterator>(iter: I) -> Vec<I::Item> {
         results.push(value);
     }
     results
+}
+
+struct Args {
+
+}
+
+impl Iterator for Args {
+    type Item = String;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        todo!()
+    }
 }
