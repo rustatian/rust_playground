@@ -51,10 +51,12 @@ fn main() {
     let mut table = Table::new();
 
     table.insert("Foo".to_string(), vec!["many madrigals".to_string()]);
-    show(table);
+    show(&table);
+
+    // println!("{:?}", table.get(&"foo".to_string())); borrow of moved value if fn show(table: Table);
 }
 
-fn show(table: Table) {
+fn show(table: &Table) {
     for (artist, works) in table {
         println!("works by {}:", artist);
         for work in works {
