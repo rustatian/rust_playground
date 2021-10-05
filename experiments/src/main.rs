@@ -1,6 +1,10 @@
 #![allow(dead_code)]
+
+use std::collections::HashMap;
 use std::io::Write;
 use std::iter::Iterator;
+
+type Table = HashMap<String, Vec<String>>;
 
 fn main() {
     let mut buf: Vec<u8> = vec![];
@@ -41,6 +45,22 @@ fn main() {
     s = "foo2".to_string();
 
     println!("{}, {}", s, t);
+
+
+
+    let mut table = Table::new();
+
+    table.insert("Foo".to_string(), vec!["many madrigals".to_string()]);
+    show(table);
+}
+
+fn show(table: Table) {
+    for (artist, works) in table {
+        println!("works by {}:", artist);
+        for work in works {
+            println!(" {}", work);
+        }
+    }
 }
 
 fn build_vector() -> Vec<i16> {
