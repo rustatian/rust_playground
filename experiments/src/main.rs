@@ -55,6 +55,7 @@ fn main() {
     let mut v = vec![11, 112];
     v.sort();       // same
     (&mut v).sort();// same
+    // 4423
 }
 
 fn show(table: &Table) {
