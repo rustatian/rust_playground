@@ -39,14 +39,11 @@ fn main() {
 
     println!("{:?}", sv);
 
-
     let mut s = "fooo".to_string();
     let t = s;
     s = "foo2".to_string();
 
     println!("{}, {}", s, t);
-
-
 
     let mut table = Table::new();
 
@@ -54,6 +51,10 @@ fn main() {
     show(&table);
 
     // println!("{:?}", table.get(&"foo".to_string())); borrow of moved value if fn show(table: Table);
+
+    let mut v = vec![11, 112];
+    v.sort();       // same
+    (&mut v).sort();// same
 }
 
 fn show(table: &Table) {
