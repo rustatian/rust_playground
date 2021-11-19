@@ -56,6 +56,14 @@ fn main() {
     v.sort();       // same
     (&mut v).sort();// same
     // 4423
+
+
+
+    let x = 10;
+    let y = 20;
+    let mut r = &x;
+
+    assert!(*r==10 || *r == 20);
 }
 
 fn show(table: &Table) {
