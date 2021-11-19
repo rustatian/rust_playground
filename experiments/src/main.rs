@@ -53,17 +53,24 @@ fn main() {
     // println!("{:?}", table.get(&"foo".to_string())); borrow of moved value if fn show(table: Table);
 
     let mut v = vec![11, 112];
-    v.sort();       // same
-    (&mut v).sort();// same
-    // 4423
-
-
+    v.sort(); // same
+    (&mut v).sort(); // same
+                     // 4423
 
     let x = 10;
     let y = 20;
     let mut r = &x;
 
-    assert!(*r==10 || *r == 20);
+    assert!(*r == 10 || *r == 20);
+
+
+    let r = &factorial(6);
+
+    assert_eq!(r+&1009, 1729);
+}
+
+fn factorial(n: usize) -> usize {
+    (1..n + 1).product()
 }
 
 fn show(table: &Table) {
