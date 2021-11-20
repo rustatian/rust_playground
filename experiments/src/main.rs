@@ -63,15 +63,14 @@ fn main() {
 
     assert!(*r == 10 || *r == 20);
 
-
     let r = &factorial(6);
 
-    assert_eq!(r+&1009, 1729);
+    assert_eq!(r + &1009, 1729);
 }
 
 static mut STASH: &i32 = &128;
 
-fn f<'a>(p:&'static i32) {
+fn f<'a>(p: &'static i32) {
     unsafe {
         STASH = p;
     }
@@ -124,4 +123,14 @@ impl Iterator for Args {
     fn next(&mut self) -> Option<Self::Item> {
         todo!()
     }
+}
+
+fn smallest<'a>(v: &'a [i32]) -> &'a i32 {
+    let mut s = &v[0];
+    for r in &v[1..] {
+        if *r < *s {
+            s = r;
+        }
+    }
+    s
 }
