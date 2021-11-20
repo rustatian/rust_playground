@@ -66,6 +66,15 @@ fn main() {
     let r = &factorial(6);
 
     assert_eq!(r + &1009, 1729);
+
+
+    // let sss;
+    // {
+    //     let parabola = [9, 4,1];
+    //     sss = smallest(&parabola);
+    // }
+    //
+    // println!("{}", sss);
 }
 
 static mut STASH: &i32 = &128;
