@@ -69,6 +69,14 @@ fn main() {
     assert_eq!(r+&1009, 1729);
 }
 
+static mut STASH: &i32 = &128;
+
+fn f<'a>(p:&'a i32) {
+    unsafe {
+        STASH = p;
+    }
+}
+
 fn factorial(n: usize) -> usize {
     (1..n + 1).product()
 }
