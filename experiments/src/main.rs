@@ -67,7 +67,6 @@ fn main() {
 
     assert_eq!(r + &1009, 1729);
 
-
     // let sss;
     // {
     //     let parabola = [9, 4,1];
@@ -75,6 +74,10 @@ fn main() {
     // }
     //
     // println!("{}", sss);
+}
+
+struct S {
+    r: &'static i32,
 }
 
 static mut STASH: &i32 = &128;
