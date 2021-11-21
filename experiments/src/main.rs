@@ -76,8 +76,8 @@ fn main() {
     // println!("{}", sss);
 }
 
-struct S {
-    r: &'static i32,
+struct S<'a> {
+    r: &'a i32,
 }
 
 static mut STASH: &i32 = &128;
