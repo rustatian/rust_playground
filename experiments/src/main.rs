@@ -80,6 +80,10 @@ struct S<'a> {
     r: &'a i32,
 }
 
+struct D<'a> {
+    s: S<'a>
+}
+
 static mut STASH: &i32 = &128;
 
 fn f<'a>(p: &'static i32) {
