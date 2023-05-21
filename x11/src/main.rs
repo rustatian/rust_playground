@@ -32,6 +32,6 @@ fn main() {
             XFlush(disp);
         }
 
-        std::thread::sleep(Duration::from_nanos((1e0 / 144.) as u64));
+        std::thread::sleep(Duration::from_nanos((1e9 / 144.) as u64));
     }
 }
