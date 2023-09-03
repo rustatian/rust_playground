@@ -1,8 +1,8 @@
-use std::{todo, assert_eq};
+use std::{assert_eq};
 
 #[tokio::test]
 async fn health_check_works() {
-    spawn_app().await.expect("failed to spawn our app");
+    spawn_app();
     
     let client = reqwest::Client::new();
 
@@ -16,6 +16,7 @@ async fn health_check_works() {
     assert_eq!(Some(0), response.content_length());
 }
 
-async fn spawn_app() -> Result<(), std::io::Error> {
-    todo!()
+fn spawn_app() {
+    let server = zero2prod::run().expect("failed to bind address");
+    let _ = tokio::spawn(server);
 }
