@@ -28,3 +28,9 @@ Cargo.lock
 #**/*.rs.bk
 .idea
 pingpcap/network/project-1/target
+
+# Added by cargo
+#
+# already existing elements were commented out
+
+#/target
