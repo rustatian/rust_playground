@@ -1,3 +1,3 @@
 [workspace]
-members = [ "projects/*" ]
+members = [ "projects/smartcms_test_host", "projects/wasm", "projects/zero_to_prod" ]
 resolver = "2"

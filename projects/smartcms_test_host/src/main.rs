@@ -1,3 +1,5 @@
+use std::io::Read;
+
 wasmtime::component::bindgen!({
     path: "./smart_cms.wit",
     world: "app",
@@ -34,7 +36,13 @@ fn main() {
             },
         },
     );
-    let component = wasmtime::component::Component::new(&engine, "guest.wasm").unwrap();
+
+    // read the guest.wasm file
+    let mut file = std::fs::File::open("guest.wasm").unwrap();
+    let mut buff = Vec::new();
+    file.read_to_end(&mut buff).unwrap();
+
+    let component = wasmtime::component::Component::new(&engine, buff).unwrap();
     let mut linker = wasmtime::component::Linker::new(&engine);
     component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| {
         &mut state.key_value
