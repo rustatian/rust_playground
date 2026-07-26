@@ -1,3 +1,9 @@
+[package]
+name = "rust_playground"
+version = "0.1.0"
+
+[lib]
+
 [workspace]
-members = [ "zero_to_prod" , "wasi_nn_example"]
+members = ["zero_to_prod", "async_rust"]
 resolver = "3"
